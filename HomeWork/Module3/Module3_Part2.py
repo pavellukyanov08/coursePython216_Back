@@ -14,17 +14,24 @@
 #
 # for i in range(num1, num2 + 1):
 #     if i % 2 == 0:
-#         sum_even_numbers += 1
+#         sum_even_numbers += i
 #         even_numbers_list.append(i)
 #     if i % 2 != 0:
-#         sum_odd_number += 1
+#         sum_odd_number += i
 #         odd_numbers_list.append(i)
 #     if i % 9 == 0:
-#         sum_nine_number += 1
+#         sum_nine_number += i
 #         nine_list.append(i)
 #
 # print(f'Сумма четных чисел: {sum_even_numbers}, среднее арифметическое: {mean(even_numbers_list)}')
 # print(f'Сумма нечетных чисел: {sum_odd_number}, среднее арифметическое: {mean(odd_numbers_list)}')
 # print(f'Сумма чисел кратных 9: {sum_nine_number}, среднее арифметическое: {mean(nine_list)}')
 
+
+# Task 2
+# lnt = int(input('Введите длину линии: '))
+# smb = input('Введите символ: ')
+#
+# for i in range(lnt):
+#     print(smb)
 
