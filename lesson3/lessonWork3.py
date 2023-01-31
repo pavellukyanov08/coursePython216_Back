@@ -3,8 +3,6 @@
 #     for n in range(1, 10):
 #         print(f"{n}*{i}={i * n}", end="\t")
 #     print()
-
-
 #Task 2
 # m = int(input("укажите высоту: "))
 # n = int(input("укажите ширину: "))
@@ -15,8 +13,8 @@
 #         print(s, end="\t")
 #     print()
 
-
 #Task 3
+
 # m = int(input("укажите высоту: "))
 # n = int(input("укажите ширину: "))
 # s = input("Укажите символ1: ")
@@ -29,7 +27,6 @@
 #         else:
 #             print(ss, end="\t")
 #     print()
-
 
 #Task 4
 # x = int(input("Введите первое число диапазона: "))
@@ -49,13 +46,12 @@
 #     else:
 #         print(num, end=' ')
 
-
 #Task 5
+
 # num = int(input("Введите число: "))
 # for i in range(1, num // 2 + 1 ):
 #     if num % i == 0:
 #         print(i, end='\t')
-
 
 #Task 6
 # import time
@@ -87,13 +83,11 @@
 # end = time.time()
 # print(f'{name} потратил - {end - start} секунд')
 
-
 #Task 7
 # row = 5
 # space = ' '
 # for i in range(row):
 #     print(space * i + '*')
-
 
 #Task 8
 # string = ""
