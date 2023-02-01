@@ -41,18 +41,3 @@
 #         print('Buzz')
 #     else:
 #         print(i)
-
-
-nums_list = []
-while True:
-    nums = int(input('Вводите числа: '))
-
-    nums_list.append(nums)
-
-    print(f'Сумма чисел равна: {sum(nums_list)}')
-    print(f'Наибольшее число: {max(nums_list)}')
-    print(f'Наибольшее число: {min(nums_list)}')
-
-    if nums == 7:
-        print('Good bye!')
-        break
