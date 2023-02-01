@@ -1,15 +1,18 @@
 # Task 1
-# nums1 = int(input('Введите первую границу: '))
-# nums2 = int(input('Введите вторую границу: '))
+# num1 = int(input("Введите первое число: "))
+# num2 = int(input("Введите второе число: "))
 #
-# k = 0
-# for i in range(nums1, nums2 // nums1 + 1):
-#     if nums1 % i == 0:
-#         k = k+1
-# if k <= 0:
-#     print("Число простое")
-# else:
-#     print("Число не является простым")
+# simple_numbers = []
+#
+# for simple_number in range(num1, num2 + 1):
+#     divider = 0
+#     for j in range(1, simple_number + 1):
+#         if simple_number % j == 0:
+#             divider += 1
+#     if divider <= 2:
+#         simple_numbers += [simple_number]
+#
+# print('Простые числа: ', simple_numbers, end='\n')
 
 
 # Task 2
