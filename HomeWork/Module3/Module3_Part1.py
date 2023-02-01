@@ -43,7 +43,6 @@
 #         print(i)
 
 
-# Task 4
 nums_list = []
 while True:
     nums = int(input('Вводите числа: '))
