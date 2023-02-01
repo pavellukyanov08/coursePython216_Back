@@ -27,7 +27,6 @@
 # print(f'Сумма нечетных чисел: {sum_odd_number}, среднее арифметическое: {mean(odd_numbers_list)}')
 # print(f'Сумма чисел кратных 9: {sum_nine_number}, среднее арифметическое: {mean(nine_list)}')
 
-
 # Task 2
 # lnt = int(input('Введите длину линии: '))
 # smb = input('Введите символ: ')
