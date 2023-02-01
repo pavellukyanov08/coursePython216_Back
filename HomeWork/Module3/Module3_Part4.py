@@ -17,3 +17,12 @@
 #     for j in range(1, 10):
 #         print(f'{i} * {j} = {i * j}', end='\t')
 #     print()
+
+
+# Task 3
+# num1 = int(input('Введите первую границу: '))
+# num2 = int(input('Введите вторую границу: '))
+# for i in range(num1, num2 + 1):
+#     for j in range(num1, num2 + 1):
+#         print(f'{i} * {j} = {i * j}', end='\t')
+#     print()
