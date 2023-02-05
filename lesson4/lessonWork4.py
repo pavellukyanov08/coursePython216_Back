@@ -189,27 +189,25 @@
 #       input('Введите, что заменить: '),
 #       input('Введите, на что заменять: ')))
 
-# import string
+
+import string
 
 # text = 'повседневная практика показывает, что начало повседневной работы по формированию позиции в значительной ' \
 #        'степени обуславливает создание всесторонне сбалансированных нововведений. практический опыт ' \
 #        'показывает, что реализация намеченного плана развития в значительной степени обуславливает ' \
 #        'создание дальнейших направлений развитая системы массового участия? с другой стороны реализация ' \
 #        'намеченного плана развития способствует подготовке и реализации'
-
-# text = input('Text: ')
-# output = ''
 #
-# for i in range(len(text)):
-#        if i == 0:
-#               output += text[i].upper()
-#        elif text[i - 1] in '.!?':
-#               output += text[i].upper()
-#        else:
-#               output += text[i]
-# print(output)
+# words = text.split('. ')
+# new_words = []
+# for word in words:
+#     if word[-1] == '!' or word[-1] == '.' or word[-1] == '?':
+#         new_word = word[:-1].capitalize() + word[-1]
+#         new_words.append(new_word)
+#     else:
+#         new_words.append(word)
 #
-# # print('. '.join(map(lambda word: word.capitalize(), text.split('. '))))
-# print(f'Количество цифр в строке: {len([digit for digit in text if digit.isdigit()])}')
-# print(f'Количество знаком препинания: {len([j for j in text if j in string.punctuation])}')
-# print(f'Количество восклицательных знаков: {len([i for i in text if i in "!"])}')
+# print(' '.join(new_words))
+# print(len([i for i in text if i.isdigit()]))
+# print(len([j for j in text if j in string.punctuation]))
+# print(len([j for j in text if j in "!"]))
