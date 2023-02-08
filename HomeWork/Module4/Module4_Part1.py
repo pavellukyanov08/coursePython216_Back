@@ -22,8 +22,11 @@
 
 
 # Task 3
-# text = 'Lorem ipsum dolor. Sit amet consectetur. Adipisicing elit. Similique, tempore.'
-
-# for i in range(len(text)):
-#     text = '.'.join()
-#     print(i)
+# import re
+#
+# text = input("Введите какой-то текст: ")
+#
+# # сделано с помощью регулярок
+# re_text = re.sub(r'[.!?]\s', r'.', text)
+# sentences_count = len(re_text.split('.'))
+# print(f'Количество предложений в тексте равно: {sentences_count} .')
