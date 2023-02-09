@@ -40,10 +40,131 @@
 
 
 # Task 4
-def odd_or_even(arr):
-    return 'even' if sum(arr) % 2 == 0 else 'odd'
+# def odd_or_even(arr):
+#     return 'even' if sum(arr) % 2 == 0 else 'odd'
+#
+#
+# print(odd_or_even([0, 1, 2, 3, 4, 5]))
 
 
-print(odd_or_even([0, 1, 2, 3, 4, 5]))
+# Task 5
+# def find_average(numbers):
+#     return sum(numbers) / len(numbers)
+#
+#
+# print(find_average([1, 2, 3]))
 
 
+# Task 6
+# def string_to_array(s):
+#     return s.split(' ')
+#
+# print(string_to_array("Robin Singh"))
+
+
+# Task 7
+# def reverse_seq(n):
+#     num_list = []
+#     for i in range(1, 6):
+#         num_list.append(i)
+# или     return num_list[::-1]
+# или    return list(range(n, 0, -1))
+#
+#
+# print(reverse_seq(5))
+
+
+# Task 8
+# Write a program where Alex can input (n) how many times the hoop goes round and it will return him an encouraging
+# message :)
+# If Alex gets 10 or more hoops, return the string "Great, now move on to tricks".
+# If he doesn't get 10 hoops, return the string "Keep at it until you get it".
+# def hoop_count(n):
+#     return 'Good!' if n >= 10 else 'Keep at it untill you get it'
+#
+#
+# print(hoop_count(11))
+
+
+# Task 9
+# Find min and max number
+# def minimum(arr):
+#     return min(arr)
+#
+# def maximum(arr):
+#     return max(arr)
+#
+#
+# print(minimum([-52, 56, 30, 29, -54, 0, -110]))
+# print(maximum([-52, 56, 30, 29, -54, 0, -110]))
+
+
+# Task 10
+# Write function bmi that calculates body mass index (bmi = weight / height2).
+# def bmi(weight, height):
+#     bmi = weight / height ** 2
+#
+#     if bmi <= 18.5:
+#         return "Underweight"
+#     elif bmi <= 25.0:
+#         return "Normal"
+#     elif bmi <= 30.0:
+#         return "Overweight"
+#     else:
+#         return "Obese"
+#
+#
+# print(bmi(110, 1.80))
+
+
+# Task 11
+# def twice_as_old(dad_years_old, son_years_old):
+#     return abs(dad_years_old - son_years_old * 2)
+#
+#
+# print(twice_as_old(42, 21))
+
+
+# Task 12
+# def solution(string):
+#     return string[::-1]
+#
+#
+# print(solution('world'))
+
+
+# Task 13
+# Complete the solution so that it returns true if the first argument(string) passed in ends with the 2nd
+# argument (also a string).
+# def solution(text, ending):
+#     return text.endswith(ending)
+#
+#
+# print(solution('abc', 'bc'))
+
+
+# Task 14
+# Your task is to write a function that takes a string
+# and return a new string with all vowels removed.
+# def disemvowel(string):
+#     for sym in 'aeiouAEIOU':
+#         string = string.replace(sym, '')
+#     return string
+#
+#
+# print(disemvowel('This website is for losers LOL!'))
+
+
+# Task 15
+# def string_to_number(s):
+#     return int(s)
+#
+#
+# print(string_to_number("1234"))
+
+
+# Task 16
+# def paperwork(n, m):
+#     return n * m if n > 0 and m > 0 else 0
+#
+# print(paperwork(5, -5))
