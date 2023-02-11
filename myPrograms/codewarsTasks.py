@@ -168,3 +168,22 @@
 #     return n * m if n > 0 and m > 0 else 0
 #
 # print(paperwork(5, -5))
+
+
+# Task 17
+# def stray(arr):
+#     for x in arr:
+#         if arr.count(x) == 1:
+#             return x
+#
+#
+# print(stray([2, 3, 2, 2, 2]))
+
+
+# def xo(s):
+#     return True if
+#
+#
+# print(xo('xo'))
+
+
