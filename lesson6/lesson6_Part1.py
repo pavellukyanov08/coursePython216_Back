@@ -106,4 +106,7 @@ import random
 # print(my_list)
 
 # Решение с методом sample
-print(random.sample(range(0, 10), 10))
+
+
+# Task 8
+# print(random.sample(range(0, 10), 10))
