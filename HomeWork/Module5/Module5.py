@@ -43,6 +43,7 @@ import random
 #         result.append(counter)
 # print(result)
 
+
 #Task 3
 # nums = [random.randint(0, 100) for _ in range(int(input('Введите длину списка: ')))]
 # print(f'Исходные числа: {nums}')
