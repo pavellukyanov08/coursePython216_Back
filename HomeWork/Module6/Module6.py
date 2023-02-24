@@ -43,6 +43,25 @@
 # print(simp_number([randint(1, 50) for _ in range(10)]))
 
 
+# Task 3
+# from random import randint
+
+
+# def count_negative_num():
+#     matrix = [[randint(-20, 10) for i in range(4)] for j in range(4)]
+#
+#     count = 0
+#     for row in matrix:
+#         for elem in row:
+#             if elem < 0:
+#                 count += 1
+#             print(elem, end='\t')
+#         print()
+#     return count
+#
+#
+# print(count_negative_num())
+
 # Task 4
 # import math
 # from math import sqrt, pi
