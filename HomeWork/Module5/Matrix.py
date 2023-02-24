@@ -56,19 +56,19 @@
 
 # Task 3
 # import random
-#
+
 # matrix = []  # создаем пустой массив
-# # Заполняем массив случайными числами (0-10)
+# Заполняем массив случайными числами (0-10)
 # for i in range(5):
 #     row = [random.randint(0, 10) for _ in range(5)]
 #     matrix.append(row)
-# # Выводим исходный массив
+# Выводим исходный массив
 # print('Матрица 5х5:')
 # for row in matrix:
 #     for element in row:
 #         print(element, end='\t')
 #     print()
-#
+
 # # Находим столбец с минимальной суммой
 # min_sum = float('inf')  # присваиваем бесконечное значение, т.к. min_sum > 0
 # min_index = -1  # присваиваем -1, т.к. index > 0
