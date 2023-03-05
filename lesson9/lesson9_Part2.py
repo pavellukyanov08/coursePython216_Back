@@ -52,5 +52,5 @@
 # Task 6
 # a = {'one': 1, 'two': 2, 'three': 3, 'four': 4}
 #
-# dict_data = list(a.items())[:2]
-# print(dict(dict_data))
+dict_data = list(a.items())[:2]
+print(dict(dict_data))
