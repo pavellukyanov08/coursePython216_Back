@@ -20,7 +20,7 @@ from random import randint
 # b = tuple(randint(1, 10) for _ in range(7))
 # c = tuple(randint(1, 10) for _ in range(7))
 #
-# print(f'First dict: {a}; second: {b}; third: {c}')
+# print(f'First tuple: {a}; second: {b}; third: {c}')
 #
 # print(f'Unique elements for first tuple: {set(a)}; \nsecond: {set(b)}; \nthird: {set(c)}')
 
