@@ -100,8 +100,9 @@ while True:
             new_country = input('Enter a new country: ').capitalize()
 
             if old_country in country_city.keys():
-                value = country_city.pop(old_country)
+                country_city.pop(old_country)
                 country_city[new_country] = input(f'Enter the new city of {new_country}: ').capitalize()
+                print(country_city)
             else:
                 print('Country is not found')
 
