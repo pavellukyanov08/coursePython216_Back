@@ -1,5 +1,8 @@
+# Task 1
 basket_players = {
-    'Cobi Brayan': 209
+    'Cobi Brayan': 209,
+    'Dan Smith': 200,
+    'Martin Dodge': 201
 }
 print(basket_players)
 
@@ -13,7 +16,7 @@ while True:
         basket_players[name] = height
 
         print(f'Players: {name}, height: {height}sm was successfully added')
-        print(basket_players)
+        # print(basket_players)
 
     elif command == 2:
         name = input('Enter name of player: ')
@@ -25,13 +28,25 @@ while True:
             print('Something went wrong')
 
     elif command == 3:
-        find_player = input('Enter the name of player: ')
+        name = input('Enter the name of player: ')
 
-        for name, height in basket_players.items():
-            if name in find_player:
-                print(f'Player found -> {name} : {height}')
+        match_player = []
+        for key in basket_players.keys():
+            if name in key:
+                match_player.append(key)
+        print('List of player:',match_player)
+
+        if match_player:
+            if len(match_player) == 1:
+                player_name = match_player[0]
+                print(f'{match_player} is {basket_players[player_name]}')
             else:
-                print('Player not found')
+                print('Match players are: ')
+                for player in match_player:
+                    print(f'{player} is {basket_players[player]}')
+                print()
+        else:
+            print('Player not found')
 
     elif command == 4:
         print(basket_players)
@@ -47,3 +62,14 @@ while True:
             print('Player is not found')
 
 
+# Task 2
+# book_collection = {
+#     "Война и мир": {
+#         'Автор': 'Лев Толстой',
+#         'Жанр': 'Роман',
+#         'Год публикации': 1867,
+#         'Страницы': 1000,
+#
+#     }
+# }
+# print(book_collection)
