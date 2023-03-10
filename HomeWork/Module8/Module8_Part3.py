@@ -30,14 +30,14 @@ while True:
     elif command == 3:
         name = input('Enter the name of player: ')
 
-        match_player = []
-        for key in basket_players.keys():
+        match_player = []   # создаем список для имен
+        for key in basket_players.keys():   # итерируемся по нему
             if name in key:
-                match_player.append(key)
-        print('List of player:',match_player)
+                match_player.append(key)    # если введеное имя есть в словаре, добавляем его в список
+        print('List of player:', match_player)
 
         if match_player:
-            if len(match_player) == 1:
+            if len(match_player) == 1:  # если имена в списке уникально, то берем и выводим его
                 player_name = match_player[0]
                 print(f'{match_player} is {basket_players[player_name]}')
             else:
