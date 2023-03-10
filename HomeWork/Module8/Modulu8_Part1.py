@@ -22,7 +22,7 @@ from random import randint
 #
 # print(f'First tuple: {a}; second: {b}; third: {c}')
 #
-# print(f'Unique elements for first tuple: {set(a)}; \nsecond: {set(b)}; \nthird: {set(c)}')
+# print(f'Unique elements for tuple: \nfirst: {set(a)}; \nsecond: {set(b)}; \nthird: {set(c)}')
 
 
 # Task 3
