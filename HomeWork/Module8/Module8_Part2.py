@@ -100,6 +100,7 @@ while True:
             [print(f'Страна: {country}, Столица: {capital}')
              for country, capital in country_city.items() if
              country.startswith(part_name.lower().capitalize())]
+
     elif command == 4:
         print(country_city)
 
@@ -113,32 +114,7 @@ while True:
         else:
             print('Country is not found')
 
-
-    #     for key in country_city.keys():  # итерируемся по нему
-    #         if find_country in key:
-    #             match_country.append(key)  # если введенная страна есть в словаре, добавляем ее в список
-    #
-    #     if match_country:
-    #         if len(match_country) == 1:  # если страна в списке есть, то берем и выводим ее
-    #             country_name = match_country[0]
-    #             print(f'Country found: {match_country} -> {country_city[country_name]}')
-    #     else:
-    #         print('Country not found')
-    #
-    # elif command == 4:
-    #     print(country_city)
-    #
-    #     old_country = input('Enter an existing country: ').capitalize()
-    #     new_country = input('Enter a new country: ').capitalize()
-    #
-    #     if old_country in country_city.keys():
-    #         value = country_city.pop(old_country)
-    #         country_city[new_country] = input(f'Enter the new city of {new_country}: ').capitalize()
-    #         print(country_city)
-    #     else:
-    #         print('Country is not found')
-    #
-    # elif command == 0:
-    #     break
+    elif command == 0:
+        break
 
 print('Program has been stopped')
