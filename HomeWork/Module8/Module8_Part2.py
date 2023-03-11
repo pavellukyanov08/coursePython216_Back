@@ -92,10 +92,11 @@ while True:
         choice = input('Enter 1, Введите 1, если хотите найти одну столицу\n'
                        'Или 2, если хотите найти все страны и столицы '
                        'по вашему слову: ')
+
         if choice == 1:
             country = input('Введите страну: ')
             print(f'Столица страны {country} - {country_city[country]}')
-        else:
+        elif command == 2:
             part_name = input('Введите часть названия страны: ')
             [print(f'Страна: {country}, Столица: {capital}')
              for country, capital in country_city.items() if
