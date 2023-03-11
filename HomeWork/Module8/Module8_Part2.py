@@ -96,7 +96,7 @@ while True:
         if choice == 1:
             country = input('Введите страну: ')
             print(f'Столица страны {country} - {country_city[country]}')
-        elif command == 2:
+        else:
             part_name = input('Введите часть названия страны: ')
             [print(f'Страна: {country}, Столица: {capital}')
              for country, capital in country_city.items() if
