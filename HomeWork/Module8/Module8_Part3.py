@@ -124,3 +124,5 @@ while True:
 
     elif command == 0:
         break
+
+print('Program has been stopped')
