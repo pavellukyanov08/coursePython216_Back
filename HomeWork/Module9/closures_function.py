@@ -64,7 +64,6 @@
 #
 # def my_func():
 #     print('Hello world')
-#     print()
 #
 #
 # once = once_called(my_func)
