@@ -8,7 +8,7 @@
 #
 #
 # def half(x):
-#     return x // 2 + 1
+#     return x // 2
 #
 #
 # def is_even(x):
