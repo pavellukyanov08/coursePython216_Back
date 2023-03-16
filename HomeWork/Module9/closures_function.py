@@ -36,7 +36,7 @@
 # def make_counter(n):
 #     def counter():
 #         nonlocal n
-#         if n >= 0:
+#         if n > 0:
 #             n -= 1
 #             print(n)
 #     return counter
@@ -48,3 +48,27 @@
 # c()
 # c()
 # c()
+
+
+# Task 3
+# def once_called(func):
+#     already_called = False
+#
+#     def inner(*args):
+#         nonlocal already_called
+#         if not already_called:
+#             func(*args)
+#             already_called = True
+#     return inner
+#
+#
+# def my_func():
+#     print('Hello world')
+#     print()
+#
+#
+# once = once_called(my_func)
+#
+# once()
+# once()
+# once()
