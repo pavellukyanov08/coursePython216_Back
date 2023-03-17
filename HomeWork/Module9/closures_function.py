@@ -21,6 +21,7 @@
 
 
 # Task 2
+# 1.
 # def counter(n):
 #     def inner():
 #         nonlocal n
@@ -33,6 +34,7 @@
 # c()
 
 
+# 2.
 # def make_counter(n):
 #     def counter():
 #         nonlocal n
