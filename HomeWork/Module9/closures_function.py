@@ -39,8 +39,9 @@
 #     def counter():
 #         nonlocal n
 #         if n > 0:
-#             n -= 1
 #             print(n)
+#             n -= 1
+#
 #     return counter
 #
 #
