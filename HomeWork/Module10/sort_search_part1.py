@@ -26,36 +26,38 @@ from random import randint
 
 grades_list = []
 
-print(grades_list)
-while True:
-    command = int(input('Введите команду: (1 - пересдача экзамена, 2 - выходит ли стипендия, '
-                        '3 - отсортированный список оценок, 4 - выход): '))
+for i in range(int(input('Введите количество оценок: '))):
+    input_grade = int(input(f"Введите оценки студента: "))
+    while input_grade not in range(1, 13):
+        print("Введено неверное значение. Повторите ввод")
+        grade = int(input(f"Введите верное значение: "))
+    grades_list.append(input_grade)
+    print(grades_list)
 
-    for i in range(10):
-        input_grade = int(input(f"Введите оценки студента: "))
-        while input_grade not in range(1, 13):
-            print("Введите значение от 1 до 12")
-            grade = int(input(f"Введите верное значение: "))
-        grades_list.append(input_grade)
-    print("Список оценок:", grades_list)
+while True:
+    command = int(input('Введите команду: (1 - вывод всех оценок, 2- пересдача экзамена, 3 - выходит ли стипендия, '
+                        '4 - отсортированный список оценок, 5 - выход): '))
 
     if command == 1:
+        print("Список оценок:", grades_list)
+
+    elif command == 2:
         grades_list[int(input('Введите индекс оценки: '))] = int(input('Введите замену: '))
         print(grades_list)
 
-    elif command == 2:
+    elif command == 3:
         avg_grade = sum(grades_list) / len(grades_list)
         if avg_grade>= 10.7:
             print('Стипендия присутствует')
         else:
             print('Стипендия отсутствует')
 
-    elif command == 3:
+    elif command == 4:
         sort_ascending = sorted(grades_list)
         sort_descending = sorted(grades_list, reverse=True)
         print(f'Сортировка по возрастанию: {sort_ascending}; \nпо убыванию: {sort_descending}')
 
-    elif command == 4:
+    elif command == 5:
         break
 
 print('Программа завершена')
