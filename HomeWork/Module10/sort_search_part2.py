@@ -28,35 +28,40 @@
 #
 # user_guide = {}
 #
+# for i in range(len(user_id)):
+#     user_guide[user_id[i]] = user_number[i]
+#
 # while True:
 #     command = int(input('Select a command: (1 - sort by ID, 2 - sort by phone number, '
 #                         '3 - output ID and phone number, '
 #                         '4 - exit): '))
 #
 #     if command == 1:
-#         for i in range(len(user_id)):
-#             user_guide[user_id[i]] = user_number[i]
-#
-#         sorted_user_guide = sorted(user_guide)
-#         print('Sort by ID:', sorted_user_guide)
-#
-#         for user in sorted_user_guide:
-#             print(f' User ID: {user} -> Phone number: {user_guide[user]}')
+#         # for i in range(len(user_id)):
+#         #     user_guide[user_id[i]] = user_number[i]
+#         #
+#         # sorted_user_guide = sorted(user_guide)
+#         # print('Sort by ID:', sorted_user_guide)
+#         #
+#         # for user in sorted_user_guide:
+#         #     print(f' User ID: {user} -> Phone number: {user_guide[user]}')
+#         print(f'Sort by ID: {sorted(user_guide.keys())}')
 #
 #     elif command == 2:
-#         for i in range(len(user_number)):
-#             user_guide[user_number[i]] = user_id[i]
-#
-#         sorted_user_guide = sorted(user_guide)
-#         print('Sort by phone number:', sorted_user_guide)
-#
-#         for number in sorted_user_guide:
-#             print(f'Phone number: {number} -> User ID: {user_guide[number]}')
+#         # for i in range(len(user_id)):
+#         #     user_guide[user_number[i]] = user_id[i]
+#         #
+#         # sorted_user_guide = sorted(user_guide)
+#         # print('Sort by phone number:', sorted_user_guide)
+#         #
+#         # for number in sorted_user_guide:
+#         #     print(f'Phone number: {number} -> User ID: {user_guide[number]}')
+#         print(f'Sort by phone number: {sorted(user_guide.values())}')
 #
 #     elif command == 3:
-#         for i in range(len(user_id)):
-#             print(f'User ID: {user_id[i]} --> Phone number: {user_number[i]}')
-#
+#         # for i in range(len(user_id)):
+#         #     print(f'User ID: {user_id[i]} --> Phone number: {user_number[i]}')
+#         print(user_guide.items())
 #     else:
 #         break
 #
@@ -88,41 +93,47 @@
 
 
 # 2. Using lists
-book_name = ['Война и мир', 'Анна Каренина', 'Отцы и дети', 'Муму', 'Евгений Онегин']
-year_publish = [1867, 1873, 1862, 1854, 1833]
-
-books = {}
-
-while True:
-    command = int(input('Select a command: (1 - sort by book name, 2 - sort by year publish, '
-                        '3 - output book name and year publish, '
-                        '4 - exit): '))
-
-    if command == 1:
-        for i in range(len(book_name)):
-            books[book_name[i]] = year_publish[i]
-
-        sorted_books = sorted(books)
-        print('Sort by book name:', sorted_books)
-
-        for name in sorted_books:
-            print(f'Book name: {name} -> Year publish: {books[name]}')
-
-    elif command == 2:
-        for i in range(len(year_publish)):
-            books[year_publish[i]] = book_name[i]
-
-        sorted_books = sorted(books)
-        print('Sort by year publish:', sorted_books)
-
-        for year in sorted_books:
-            print(f'Year publish: {year} -> Book name: {books[year]}')
-
-    elif command == 3:
-        for i in range(len(book_name)):
-            print(f'Book name: {book_name[i]} --> Year publish: --> {year_publish[i]}')
-
-    else:
-        break
-
-print('Program is completed')
+# book_name = ['Война и мир', 'Анна Каренина', 'Отцы и дети', 'Муму', 'Евгений Онегин']
+# year_publish = [1867, 1873, 1862, 1854, 1833]
+#
+# books = {}
+#
+# for i in range(len(book_name)):
+#     books[book_name[i]] = year_publish[i]
+#
+# while True:
+#     command = int(input('Select a command: (1 - sort by book name, 2 - sort by year publish, '
+#                         '3 - output book name and year publish, '
+#                         '4 - exit): '))
+#
+#     if command == 1:
+#         # for i in range(len(book_name)):
+#         #     books[book_name[i]] = year_publish[i]
+#         #
+#         # sorted_books = sorted(books)
+#         # print('Sort by book name:', sorted_books)
+#         #
+#         # for name in sorted_books:
+#         #     print(f'Book name: {name} -> Year publish: {books[name]}')
+#         print(f'Sort by phone number: {sorted(books.keys())}')
+#
+#     elif command == 2:
+#         # for i in range(len(year_publish)):
+#         #     books[year_publish[i]] = book_name[i]
+#         #
+#         # sorted_books = sorted(books)
+#         # print('Sort by year publish:', sorted_books)
+#         #
+#         # for year in sorted_books:
+#         #     print(f'Year publish: {year} -> Book name: {books[year]}')
+#         print(f'Sort by phone number: {sorted(books.values())}')
+#
+#     elif command == 3:
+#         # for i in range(len(book_name)):
+#         #     print(f'Book name: {book_name[i]} --> Year publish: --> {year_publish[i]}')
+#         print(f'Sort by phone number: {sorted(books.items())}')
+#
+#     else:
+#         break
+#
+# print('Program is completed')
