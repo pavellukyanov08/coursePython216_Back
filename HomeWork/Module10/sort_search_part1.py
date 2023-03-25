@@ -78,14 +78,15 @@ print(f'Обычная: {nums_list}')
 print()
 
 # Усовершенствованная
+counter = 0
+
 for i in range(len(nums_list)):
     swapped = False
-    counter = 0
     for j in range(len(nums_list) - i - 1):
+        counter += 1
         if nums_list[j] > nums_list[j + 1]:
-            nums_list[j], nums_list[j + 1] = nums_list[j + 1], nums_list[j]
             swapped = True
-            counter += 1
-if not swapped:
-    print(f'Массив отсортирован за {i} итераций. Количество перестановок: {counter}')
-print(f'Усовершенствованная: {nums_list}')
+            nums_list[j], nums_list[j + 1] = nums_list[j + 1], nums_list[j]
+    if not swapped:
+        break
+print(f'Усовершенствованная: {nums_list}; \n {counter}')
