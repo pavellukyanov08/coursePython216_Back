@@ -24,18 +24,26 @@
 #                 f' {count_consonant}; \nЦифр: {count_digit}')
 
 
+# Task 3
+# with open("file1.txt", "r") as file1:
+#     lines = file1.readlines()
+#
+# with open("file2.txt", "w") as file2:
+#     file2.writelines(lines[:-1])
+
+
 # Task 4
 # with open(file='file1.txt', mode='r', encoding='utf-8') as file:
-#     max_length = 0
-#     max_line = ''
+#     min_length = 0
+#     min_line = ''
 #
 #     for line in file:
 #         length = len(line.strip())
-#         if length > max_length:
-#             max_length = length
-#             max_line = line.strip()
+#         if length < min_length:
+#             min_length = length
+#             min_line = line.strip()
 #
-# print(f'Самая длинная строка: {max_line}, ее длина: {max_length}')
+# print(f'Самая длинная строка: {min_line}, ее длина: {min_length}')
 
 
 # Task 5
@@ -51,13 +59,12 @@
 #     print(content)
 #
 #     search_word = input('Искомое слово: ')
-#     for word in content:
-#         if search_word in word:
-#             replace_word = input('Новое слово: ')
-#             content = content.replace(search_word, replace_word)
-#             print(f'Замена успешна!. \nНовые данные: {content}')
-#         else:
-#             print('Искомое слово не найдено')
+#     if search_word in content:
+#         replace_word = input('Новое слово: ')
+#         content = content.replace(search_word, replace_word)
+#         print(f'Замена успешна!. \nНовые данные: {content}')
+#     else:
+#         print('Искомое слово не найдено')
 #
 #     file.seek(0)
 #     file.write(content)
