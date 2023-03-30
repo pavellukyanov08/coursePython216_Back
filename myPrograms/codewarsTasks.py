@@ -187,3 +187,49 @@
 # print(xo('xo'))
 
 
+# Task 18
+# def find_needle(haystack):
+#     return f"found the needle at position {haystack.index('needle')}"
+#
+#
+# print(find_needle(['3', '123124234', None, 'needle', 'world', 'hay', 2, '3', True, False]))
+
+
+# Task 19
+# def count_sheep(n):
+    # .1
+    # sheep = ''
+    # for i in range(1, n + 1):
+    #     sheep += str(i) + ' sheep...'
+    # return sheep
+
+    # 2. return ''.join(f'{i} sheep... ' for i in range(1, n + 1))
+
+
+# print(count_sheep(5))
+
+
+# Task 20
+# def is_even(n):
+#     return True if n % 2 == 0 else False
+#
+#
+# print(is_even(0.5))
+
+
+# Task 21
+# def rental_car_cost(d):
+    # return d * 40 - 50 if d >= 7 else d * 40 - 20
+    # if d >= 7:
+    #     return d * 40 - 50
+    # else:
+    #     return d * 40 - 20
+
+# print(rental_car_cost(20))
+
+
+# Task 22
+# def how_much_i_love_you(nb_petals):
+# return ['i love you ', "a little", "a lot", "passionately", "madly", "not at all"][nb_petals % 6 - 1]
+print(8 % 6 - 1)
+# print(how_much_i_love_you(8))
