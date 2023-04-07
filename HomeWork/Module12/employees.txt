@@ -1,1 +1,0 @@
-john,doe,32,manager,3000000.0
