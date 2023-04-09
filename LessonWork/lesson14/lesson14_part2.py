@@ -123,50 +123,48 @@ import math
 # stadium1.name = 'Арена славы'
 # print(stadium1.name)
 #
-# del stadium1.name
-# print(stadium1.name)
 # stadium1.input_data()
 # stadium1.output_data()
 
 
 # Task 3
-class Shape:
-    def __init__(self, name):
-        self.name = name
-
-    def output_info(self):
-        print(f'Фигура: {self.name}')
-
-
-class Circle(Shape):
-    def __init__(self, radius):
-        super().__init__('Circle')
-        self.radius = radius
-
-    def area(self):
-        return 3.14 * self.radius ** 2
-
-
-class Square(Shape):
-    def __init__(self, length):
-        super().__init__('Square')
-        self.length = length
-
-    def area(self):
-        return self.length ** 2
-
-
-shape = Shape('Фигура')
-shape.output_info()
-print(shape.output_info())
-print('-'*50)
-
-circle1 = Circle(5)
-circle1.output_info()
-print(circle1.output_info())
-print('-'*50)
-
-square1 = Square(4)
-square1.output_info()
-print(square1.output_info())
-print('-'*50)
+# class Shape:
+#     def __init__(self, name):
+#         self.name = name
+#
+#     def output_info(self):
+#         print(f'Фигура: {self.name}')
+#
+#
+# class Circle(Shape):
+#     def __init__(self, radius):
+#         super().__init__('Circle')
+#         self.radius = radius
+#
+#     def area(self):
+#         return 3.14 * self.radius ** 2
+#
+#
+# class Square(Shape):
+#     def __init__(self, length):
+#         super().__init__('Square')
+#         self.length = length
+#
+#     def area(self):
+#         return self.length ** 2
+#
+#
+# shape = Shape('Фигура')
+# shape.output_info()
+# print(shape.output_info())
+# print('-'*50)
+#
+# circle1 = Circle(5)
+# circle1.output_info()
+# print(circle1.output_info())
+# print('-'*50)
+#
+# square1 = Square(4)
+# square1.output_info()
+# print(square1.output_info())
+# print('-'*50)
