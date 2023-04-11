@@ -23,15 +23,16 @@ class Car:
     @input_manufacturer.setter
     def input_manufacturer(self, manufacturer):
         self.__manufacturer = manufacturer
+
     @input_model.setter
     def input_manufacturer(self, manufacturer):
         self.__manufacturer = manufacturer
         return self.manufacturer
 
     def input_data(self):
-        self.model = input('Введите модель: ')
+        # self.model = input('Введите модель: ')
         self.year_release = int(input('Введите дату релиза: '))
-        self.manufacturer = input('Введите производителя: ')
+        # self.manufacturer = input('Введите производителя: ')
         self.eng_cap = float(input('Введите объем двигателя: '))
         self.car_clr = input('Введите цвет машины: ')
         self.price = int(input('Введите цену: '))
@@ -43,8 +44,8 @@ class Car:
 
 car1 = Car('', '', '', '', '', '')
 
-car1.input_model('M5')
-car1.input_manufacturer('BMW')
+car1.model = 'M5'
+car1.manufacturer = 'BMW'
 
 car1.input_data()
 car1.output_data()
