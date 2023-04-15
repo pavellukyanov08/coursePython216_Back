@@ -13,11 +13,11 @@
 #         return self.__denominator
 #
 #     @numerator.setter
-#     def set_numerator(self, value):
+#     def numerator(self, value):
 #         self.__numerator = value
 #
 #     @denominator.setter
-#     def set_denominator(self, value):
+#     def denominator(self, value):
 #         if value == 0:
 #             raise ValueError('Знаменатель не может быть нулем!')
 #         self.__denominator = value
@@ -64,7 +64,6 @@
 # result_multiplication = fr1.multiply_fraction(fr2)
 # result_division = fr1.divide_fraction(fr2)
 #
-# # Вывод результатов на экран
 # print("Addition:")
 # result_addition.output_fraction()
 # print()
@@ -80,6 +79,7 @@
 # print("Division:")
 # result_division.output_fraction()
 # print()
+
 
 # Task 2
 # class Temperature:
