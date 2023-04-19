@@ -1,8 +1,89 @@
 # Task 1
+from fractions import Fraction as Fr
+
+
+class Fraction:
+    count = 0
+
+    def __init__(self, numerator, denominator):
+        self.__numerator = numerator
+        self.__denominator = denominator
+        Fraction.count += 1
+
+    @property
+    def numerator(self):
+        return self.__numerator
+
+    @numerator.setter
+    def numerator(self, value):
+        self.__numerator = value
+
+    @property
+    def denominator(self):
+        return self.__denominator
+
+    @denominator.setter
+    def denominator(self, value):
+        if value == 0:
+            raise ValueError('Знаменатель не может быть нулем!')
+        else:
+            self.__denominator = value
+
+    def __add__(self, other):
+        new_numerator = self.numerator * other.denominator + self.denominator * other.numerator
+        new_denominator = self.denominator * other.denominator
+        return f'the result is {Fraction.__simplify(new_numerator, new_denominator)}'
+
+    def __add__(self, other):
+        new_numerator = self.numerator * other.denominator + self.denominator * other.numerator
+        new_denominator = self.denominator * other.denominator
+        return f'Addition: {Fraction.__simplify(new_numerator, new_denominator)}'
+
+    def __sub__(self, other):
+        new_numerator = self.numerator * other.denominator - self.denominator * other.numerator
+        new_denominator = self.denominator * other.denominator
+        return f'Subtraction: {Fraction.__simplify(new_numerator, new_denominator)}'
+
+    def __mul__(self, other):
+        new_numerator = self.numerator * other.numerator
+        new_denominator = self.denominator * other.denominator
+        return f'Multiplication: {Fraction.__simplify(new_numerator, new_denominator)}'
+
+    def __truediv__(self, other):
+        new_numerator = self.numerator * other.denominator
+        new_denominator = self.denominator * other.numerator
+        return f'Division: {Fraction.__simplify(new_numerator, new_denominator)}'
+
+    @staticmethod
+    def __simplify(numerator, denominator):
+        return Fr(numerator, denominator)
+
+    @staticmethod
+    def counter():
+        print(f'counter = {Fraction.count}')
+
+
+f1 = Fraction(3, 7)
+f2 = Fraction(2, 9)
+
+print(f1 + f2)
+print(f1 - f2)
+print(f1 * f2)
+print(f1 / f2)
+
+Fraction.counter()
+
+#
+# from fractions import Fraction
+#
+#
 # class Fraction:
+#     count = 0
+#
 #     def __init__(self, numerator, denominator):
-#         self.__numerator = numerator
-#         self.__denominator = denominator
+#         self.numerator = numerator
+#         self.denominator = denominator
+#         Fraction.count += 1
 #
 #     @property
 #     def numerator(self):
@@ -20,49 +101,47 @@
 #     def denominator(self, value):
 #         if value == 0:
 #             raise ValueError('Знаменатель не может быть нулем!')
-#         self.__denominator = value
-#
-#     def input_fraction(self):
-#         self.numerator = int(input("Введите числитель: "))
-#         self.denominator = int(input("Введите знаменатель: "))
+#         else:
+#             self.__denominator = value
 #
 #     def output_fraction(self):
 #         print(f"{self.numerator} / {self.denominator}")
 #
-#     def adding_fraction(self, other_fraction):
-#         new_numerator = self.numerator * other_fraction.denominator + self.denominator * other_fraction.numerator
-#         new_denominator = self.denominator * other_fraction.denominator
+#     def __add__(self, other):
+#         new_numerator = self.numerator * other.denominator + self.denominator * other.numerator
+#         new_denominator = self.denominator * other.denominator
 #         return Fraction(new_numerator, new_denominator)
 #
-#     def subtract_fraction(self, other_fraction):
-#         new_numerator = self.numerator * other_fraction.denominator - self.denominator * other_fraction.numerator
-#         new_denominator = self.denominator * other_fraction.denominator
+#     def __sub__(self, other):
+#         new_numerator = self.numerator * other.denominator - self.denominator * other.numerator
+#         new_denominator = self.denominator * other.denominator
 #         return Fraction(new_numerator, new_denominator)
 #
-#     def multiply_fraction(self, other_fraction):
-#         new_numerator = self.numerator * other_fraction.numerator
-#         new_denominator = self.denominator * other_fraction.denominator
+#     def __mul__(self, other):
+#         new_numerator = self.numerator * other.numerator
+#         new_denominator = self.denominator * other.denominator
 #         return Fraction(new_numerator, new_denominator)
 #
-#     def divide_fraction(self, other_fraction):
-#         new_numerator = self.numerator * other_fraction.denominator
-#         new_denominator = self.denominator * other_fraction.numerator
+#     def __truediv__(self, other):
+#         new_numerator = self.numerator * other.denominator
+#         new_denominator = self.denominator * other.numerator
 #         return Fraction(new_numerator, new_denominator)
+#
+#     # @staticmethod
+#     # def __sim
+#
+#     @staticmethod
+#     def counter():
+#         print(f'counter = {Fraction.counter}')
 #
 #
 # fr1 = Fraction(10, 15)
 # fr2 = Fraction(15, 15)
 #
-# print('Fraction 1: ')
-# fr1.output_fraction()
-#
-# print('Fraction 2: ')
-# fr2.output_fraction()
-# print('---' * 5)
-# result_addition = fr1.adding_fraction(fr2)
-# result_subtraction = fr1.subtract_fraction(fr2)
-# result_multiplication = fr1.multiply_fraction(fr2)
-# result_division = fr1.divide_fraction(fr2)
+# result_addition = fr1.__add__(fr2)
+# result_subtraction = fr1.__sub__(fr2)
+# result_multiplication = fr1.__mul__(fr2)
+# result_division = fr1.__truediv__(fr2)
 #
 # print("Addition:")
 # result_addition.output_fraction()
@@ -79,6 +158,8 @@
 # print("Division:")
 # result_division.output_fraction()
 # print()
+#
+# Fraction.count()
 
 
 # Task 2
