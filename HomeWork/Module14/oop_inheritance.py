@@ -157,13 +157,12 @@ class Shape:
 
     def save(self, file_name):
         with open(file=file_name, mode='wb') as f:
-            pickle.dump(self, f)
-        print("Фигура сохранена в файл: ", file_name)
+            return f'Фиугура сохранена в файл: {pickle.dump(self, f)}'
 
     @staticmethod
     def load(file_name):
         with open(file_name, 'rb') as f:
-            return pickle.load(f)
+            return f'Данные загружены: {pickle.load(f)}'
 
 
 class Square(Shape):
@@ -205,7 +204,7 @@ class Ellipse(Shape):
 
 
 shapes = [
-    Square(0, 0, 5),
+    Square(15, 15, 5),
     Rectangle(10, 10, 20, 30),
     Circle(50, 50, 10),
     Ellipse(100, 100, 30, 50)
@@ -213,14 +212,13 @@ shapes = [
 
 # Сохраняем фигуры в файл
 for i, shape in enumerate(shapes):
-    file_name = f"shape{i}.txt"
-    shape.save(file_name)
+    shape.show()
+    shape.save(f'shape_{i}.txt')
 
 # Загружаем фигуры из файла в другой список
 loaded_shapes = []
 for i in range(len(shapes)):
-    file_name = f"shape{i}.txt"
-    loaded_shapes.append(Shape.load(file_name))
+    loaded_shapes.append(Shape.load(f'shape_{i}.txt'))
 
 # Выводим информацию о каждой из фигур
 for shape in loaded_shapes:
