@@ -153,16 +153,17 @@ class Shape:
         self.y = y
 
     def show(self):
-        print(f'Координаты: ({self.x}, {self.y})')
+        print(f"Координаты: ({self.x}, {self.y})")
 
     def save(self, file_name):
-        with open(file=file_name, mode='wb') as f:
-            return f'Фиугура сохранена в файл: {pickle.dump(self, f)}'
+        with open(file_name, 'wb') as f:
+            pickle.dump(self, f)
+        print("Фигура сохранена в файл: ", file_name)
 
     @staticmethod
     def load(file_name):
         with open(file_name, 'rb') as f:
-            return f'Данные загружены: {pickle.load(f)}'
+            return pickle.load(f)
 
 
 class Square(Shape):
@@ -170,8 +171,8 @@ class Square(Shape):
         super().__init__(x, y)
         self.length = length
 
-    def show(self):
-        print(f'Квадрат: Координаты ({self.x}, {self.y}), Длина: {self.length}')
+    def Show(self):
+        print(f"Квадрат: ({self.x}, {self.y}), Длина: {self.length}")
 
 
 class Rectangle(Shape):
@@ -180,8 +181,8 @@ class Rectangle(Shape):
         self.width = width
         self.height = height
 
-    def show(self):
-        print(f'Прямоугольник: Координаты ({self.x}, {self.y}), Ширина: {self.width}, Высота: {self.height}')
+    def Show(self):
+        print(f"Прямоугольник: ({self.x}, {self.y}), Ширина: {self.w}, Высота: {self.height}")
 
 
 class Circle(Shape):
@@ -190,7 +191,7 @@ class Circle(Shape):
         self.radius = radius
 
     def show(self):
-        print(f'Круг: Координаты ({self.x}, {self.y}), Радиус: {self.radius}')
+        print(f"Круг: ({self.x}, {self.y}), Радиус: {self.radius}")
 
 
 class Ellipse(Shape):
@@ -200,11 +201,12 @@ class Ellipse(Shape):
         self.height = height
 
     def show(self):
-        print(f'Елипс: Координаты ({self.x}, {self.y}), Width: {self.width}, Height: {self.height}')
+        print(f"Елипс: ({self.x}, {self.y}), Ширина: {self.width}, Высота: {self.height}")
 
 
+# Создаем список фигур
 shapes = [
-    Square(15, 15, 5),
+    Square(0, 0, 5),
     Rectangle(10, 10, 20, 30),
     Circle(50, 50, 10),
     Ellipse(100, 100, 30, 50)
@@ -212,14 +214,17 @@ shapes = [
 
 # Сохраняем фигуры в файл
 for i, shape in enumerate(shapes):
-    shape.show()
-    shape.save(f'shape_{i}.txt')
+    file_name = f"shape{i}.txt"
+    shape.save(file_name)
 
 # Загружаем фигуры из файла в другой список
 loaded_shapes = []
 for i in range(len(shapes)):
-    loaded_shapes.append(Shape.load(f'shape_{i}.txt'))
+    file_name = f"shape{i}.txt"
+    loaded_shapes.append(Shape.load(file_name))
 
 # Выводим информацию о каждой из фигур
 for shape in loaded_shapes:
     shape.show()
+
+
