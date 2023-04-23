@@ -1,24 +1,26 @@
-import math
+# from abc import ABC, abstractmethod
+# import math
 # Task1
 #
 #
-# class Figure:
-#     def __init__(self, name):
-#         self.name = name
-#
+# class Figure(ABC):
+#     @abstractmethod
 #     def get_area(self):
 #         pass
 #
-#     def print_area(self):
-#         print(f'Фигура: {self.name} с площадью {self.get_area()}')
+#     def __int__(self):
+#         return int(self.get_area)
+#
+#     def __str__(self):
+#         return f"Фигура с площадью {self.get_area}"
 #
 #
 # class Rectangle(Figure):
 #     def __init__(self, a, b):
 #         self.a = a
 #         self.b = b
-#         super().__init__('Прямоугольник')
 #
+#     @property
 #     def get_area(self):
 #         return self.a * self.b
 #
@@ -26,8 +28,8 @@ import math
 # class Circle(Figure):
 #     def __init__(self, radius):
 #         self.radius = radius
-#         super().__init__('Круг')
 #
+#     @property
 #     def get_area(self):
 #         return math.pi * self.radius ** 2
 #
@@ -36,8 +38,8 @@ import math
 #     def __init__(self, leg1, leg2):
 #         self.leg1 = leg1
 #         self.leg2 = leg2
-#         super().__init__('Прямоугольный треугольник')
 #
+#     @property
 #     def get_area(self):
 #         return self.leg1 * self.leg2 / 2
 #
@@ -47,132 +49,62 @@ import math
 #         self.a = a
 #         self.b = b
 #         self.h = h
-#         super().__init__('Трапеция')
 #
+#     @property
 #     def get_area(self):
 #         return (self.a + self.b) * self.h / 0.5
 #
 #
 # r = Rectangle(5, 10)
-# r.print_area()
-#
 # c = Circle(5)
-# c.print_area()
-#
 # rt = RightTriangle(9, 18)
-# rt.print_area()
-#
 # t = Trapezoid(4, 8, 8)
-# t.print_area()
-
-
-# Task 2
-# class Figure:
-#     def area(self):
-#         pass
 #
-#     def __int__(self):
-#         return int(self.area())
-#
-#     def __str__(self):
-#         return f"Фигура с площадью {self.area()}"
-#
-#
-# class Rectangle(Figure):
-#     def __init__(self, a, b):
-#         self.a = a
-#         self.b = b
-#
-#     def area(self):
-#         return self.a * self.b
-#
-#     def __str__(self):
-#         return f"Прямоугольник с площадью {self.area()}"
-#
-#
-# class Circle(Figure):
-#     def __init__(self, radius):
-#         self.radius = radius
-#
-#     def area(self):
-#         return math.pi * self.radius ** 2
-#
-#     def __str__(self):
-#         return f"Круг с площадью {self.area()}"
-#
-#
-# class RightTriangle(Figure):
-#     def __init__(self, a, b):
-#         self.a = a
-#         self.b = b
-#
-#     def area(self):
-#         return 0.5 * self.a * self.b
-#
-#     def __str__(self):
-#         return f"Прямоугольный треугольник с площадью {self.area()}"
-#
-#
-# class Trapezium(Figure):
-#     def __init__(self, a, b, h):
-#         self.a = a
-#         self.b = b
-#         self.h = h
-#
-#     def area(self):
-#         return 0.5 * (self.a + self.b) * self.h
-#
-#     def __str__(self):
-#         return f"Трапеция с площадью {self.area()}"
-#
-#
-# r = Rectangle(5, 10)
-# print(int(r))
-# print(str(r))
-#
-# c = Circle(4)
-# print(int(c))
-# print(str(c))
-#
-# rt = RightTriangle(3, 6)
-# print(int(rt))
-# print(str(rt))
-#
-# tr = Trapezium(5, 10, 4)
-# print(int(tr))
-# print(str(tr))
+# shapes = {r, c, rt, t}
+# for shape in shapes:
+#     print(shape.get_area)
+#     print(int(shape))
+#     print(shape)
 
 
 # Task 3
-import pickle
-
-
 class Shape:
     def __init__(self, x, y):
         self.x = x
         self.y = y
 
     def show(self):
-        print(f"Координаты: ({self.x}, {self.y})")
+        info = ''
+        info += f'{self.__class__.__name__}:\n'
+        for key, value in self.__dict__.items():
+            info += f'\t{key}: {value}\n'
+        return info
 
-    def save(self, file_name):
-        with open(file_name, 'wb') as f:
-            pickle.dump(self, f)
-        print("Фигура сохранена в файл: ", file_name)
+    def save(self, filename='shape.txt'):
+        try:
+            Shape.load(filename)
+        except Exception:
+            open(filename, 'w')
+        with open(filename, 'a') as f:
+            f.write(f'{self.__class__.__name__}(**{self.__dict__})\n')
 
     @staticmethod
-    def load(file_name):
-        with open(file_name, 'rb') as f:
-            return pickle.load(f)
+    def load(filename):
+        with open(filename, 'r') as f:
+            lines = f.readlines()
+            if len(lines) == 1:
+                return eval(lines[0])
+            else:
+                return list(map(eval, lines))
+
+    def __str__(self):
+        return self.show()
 
 
 class Square(Shape):
     def __init__(self, x, y, length):
         super().__init__(x, y)
         self.length = length
-
-    def Show(self):
-        print(f"Квадрат: ({self.x}, {self.y}), Длина: {self.length}")
 
 
 class Rectangle(Shape):
@@ -181,17 +113,11 @@ class Rectangle(Shape):
         self.width = width
         self.height = height
 
-    def Show(self):
-        print(f"Прямоугольник: ({self.x}, {self.y}), Ширина: {self.w}, Высота: {self.height}")
-
 
 class Circle(Shape):
     def __init__(self, x, y, radius):
         super().__init__(x, y)
         self.radius = radius
-
-    def show(self):
-        print(f"Круг: ({self.x}, {self.y}), Радиус: {self.radius}")
 
 
 class Ellipse(Shape):
@@ -200,31 +126,19 @@ class Ellipse(Shape):
         self.width = width
         self.height = height
 
-    def show(self):
-        print(f"Елипс: ({self.x}, {self.y}), Ширина: {self.width}, Высота: {self.height}")
 
-
-# Создаем список фигур
 shapes = [
-    Square(0, 0, 5),
-    Rectangle(10, 10, 20, 30),
-    Circle(50, 50, 10),
-    Ellipse(100, 100, 30, 50)
+    Circle(10, 10, 5),
+    Square(20, 20, 10),
+    Rectangle(30, 30, 5, 7),
+    Ellipse(40, 40, 7, 5)
 ]
 
-# Сохраняем фигуры в файл
-for i, shape in enumerate(shapes):
-    file_name = f"shape{i}.txt"
-    shape.save(file_name)
+for shape in shapes:
+    shape.save('shape.txt')
 
-# Загружаем фигуры из файла в другой список
-loaded_shapes = []
-for i in range(len(shapes)):
-    file_name = f"shape{i}.txt"
-    loaded_shapes.append(Shape.load(file_name))
-
-# Выводим информацию о каждой из фигур
-for shape in loaded_shapes:
+new_shapes = Shape.load('shape.txt')
+for shape in new_shapes:
     shape.show()
 
 
