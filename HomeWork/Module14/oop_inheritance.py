@@ -68,43 +68,35 @@
 
 
 # Task 3
+import pickle
+
+
 class Shape:
     def __init__(self, x, y):
         self.x = x
         self.y = y
 
     def show(self):
-        info = ''
-        info += f'{self.__class__.__name__}:\n'
-        for key, value in self.__dict__.items():
-            info += f'\t{key}: {value}\n'
-        return info
+        print(f"Координаты: ({self.x}, {self.y})")
 
-    def save(self, filename='shape.txt'):
-        try:
-            Shape.load(filename)
-        except Exception:
-            open(filename, 'w')
-        with open(filename, 'a') as f:
-            f.write(f'{self.__class__.__name__}(**{self.__dict__})\n')
+    def save(self, file_name):
+        with open(file_name, 'wb') as f:
+            pickle.dump(self, f)
+        print("Фигура сохранена в файл: ", file_name)
 
     @staticmethod
-    def load(filename):
-        with open(filename, 'r') as f:
-            lines = f.readlines()
-            if len(lines) == 1:
-                return eval(lines[0])
-            else:
-                return list(map(eval, lines))
-
-    def __str__(self):
-        return self.show()
+    def load(file_name):
+        with open(file_name, 'rb') as f:
+            return pickle.load(f)
 
 
 class Square(Shape):
     def __init__(self, x, y, length):
         super().__init__(x, y)
         self.length = length
+
+    def show(self):
+        print(f"Квадрат: ({self.x}, {self.y}), Длина: {self.length}")
 
 
 class Rectangle(Shape):
@@ -113,11 +105,17 @@ class Rectangle(Shape):
         self.width = width
         self.height = height
 
+    def show(self):
+        print(f"Треугольник: ({self.x}, {self.y}), Ширина: {self.width}, Высота: {self.height}")
+
 
 class Circle(Shape):
     def __init__(self, x, y, radius):
         super().__init__(x, y)
         self.radius = radius
+
+    def show(self):
+        print(f"Круг: ({self.x}, {self.y}), Радиус: {self.radius}")
 
 
 class Ellipse(Shape):
@@ -126,19 +124,32 @@ class Ellipse(Shape):
         self.width = width
         self.height = height
 
+    def show(self):
+        print(f"Эпипс: ({self.x}, {self.y}), Ширина: {self.width}, Высота: {self.height}")
 
+
+# Создаем список фигур
 shapes = [
-    Circle(10, 10, 5),
-    Square(20, 20, 10),
-    Rectangle(30, 30, 5, 7),
-    Ellipse(40, 40, 7, 5)
+    Square(0, 0, 5),
+    Rectangle(10, 10, 20, 30),
+    Circle(50, 50, 10),
+    Ellipse(100, 100, 30, 50)
 ]
 
-for shape in shapes:
-    shape.save('shape.txt')
+# Сохраняем фигуры в файл
+for i, shape in enumerate(shapes):
+    file_name = f"shape{i}.txt"
+    shape.save(file_name)
 
-new_shapes = Shape.load('shape.txt')
-for shape in new_shapes:
+# Загружаем фигуры из файла в другой список
+loaded_shapes = []
+for i in range(len(shapes)):
+    file_name = f"shape{i}.txt"
+    loaded_shapes.append(Shape.load(file_name))
+
+# Выводим информацию о каждой из фигур
+for shape in loaded_shapes:
     shape.show()
+
 
 
