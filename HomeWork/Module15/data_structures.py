@@ -72,16 +72,17 @@ class StringStack:
         self.stack = []
 
     def push(self, value):
-        if len(self.stack) == self.size:
-            return 'Стек заполнен!'
-        else:
+        if len(self.stack) < self.size:
             self.stack.append(value)
+            print(f'Строка {value} была добавлена в стек')
+        else:
+            print("Stack is full, cannot add new string")
 
     def pop(self):
-        return self.is_empty() or self.stack.pop()
+        return f'Стек {self.is_empty()} or self.stack.pop()'
 
     def count(self):
-        return len(self.stack)
+        return f'Количество строк в стеке равно: {len(self.stack)}'
 
     def is_full(self):
         if len(self.stack) == self.size:
@@ -115,165 +116,33 @@ while True:
 
     if choice == "1":
         stack_str = input("Введите строки, чтобы добавить в стек: ")
-        if stack.push(stack_str):
-            print("Строка добавлена в стек")
-        else:
-            print("Стек заполнен!")
+        stack.push(stack_str)
+
     elif choice == "2":
         stack_str = stack.pop()
-        if stack_str is not None:
-            print("Вытолкнутая строка:", stack_str)
-        else:
-            print("Стек пуст!")
+
     elif choice == "3":
-        count = stack.count_lines()
-        if count == 1:
-            print("В стеке имеется одна строка.")
-        else:
-            print(f"В стеке имеется {count} строк")
+        count = stack.count()
+
     elif choice == "4":
-        if stack.is_empty():
-            print("Стек пуст!")
-        else:
-            print("В стеке имеются строки")
+        stack.is_empty()
+
     elif choice == "5":
-        if stack.is_full():
-            print("Стек заполнен!")
-        else:
-            print("В стеке есть место")
+        stack.is_full()
+
     elif choice == "6":
         stack.clear()
-        print("Стек очищен")
+
     elif choice == "7":
         stack_str = stack.peek()
-        if stack_str is not None:
-            print(f"Верхняя строка стека: {stack_str}")
-        else:
-            print("Стек пустой!")
+
     elif choice == "0":
         print("Завершение программы...")
         break
+
     else:
         print("Неверная команда")
 
-# print(stack.push("first"))
-# print(stack.push("second"))
-# print(stack.count_lines())
-# print(stack.is_empty())
-# print(stack.is_full())
-# print(stack.push("third"))
-# print(stack.push("fourth"))
-# print(stack.push("fifth"))
-# print(stack.push("sixth"))
-# print(stack.pop())
-# print(stack.count_lines())
-# print(stack.is_empty())
-# print(stack.is_full())
-# print(stack.peek())
-# stack.clear()
-# print(stack.count_lines())
-
-# class StringStack:
-#     def __init__(self, size):
-#         self.stack = [''] * size
-#         self.top = -1
-#
-#     def push(self, string):
-#         if self.top == len(self.stack) - 1:
-#             return False
-#         else:
-#             self.top += 1
-#             self.stack[self.top] = string
-#             return True
-#
-#     def pop(self):
-#         if self.top == -1:
-#             return None
-#         else:
-#             string = self.stack[self.top]
-#             self.top -= 1
-#             return string
-#
-#     def count(self):
-#         return self.top + 1
-#
-#     def is_empty(self):
-#         return self.top == -1
-#
-#     def is_full(self):
-#         return self.top == len(self.stack) - 1
-#
-#     def clear(self):
-#         self.top = -1
-#
-#     def peek(self):
-#         if self.top == -1:
-#             return None
-#         else:
-#            return self.stack[self.top]
-#
-# #Menu
-#
-# stack = StringStack(5)
-#
-# while True:
-#     print("Menu:")
-#     print("1. Push a string")
-#     print("2. Pop a string")
-#     print("3. Count strings in stack")
-#     print("4. Check if stack is empty")
-#     print("5. Check if stack is full")
-#     print("6. Clear stack")
-#     print("7. Peek at top of stack")
-#     print("0. Exit")
-#     choice = input("Enter your choice: ")
-#
-#     if choice == "1":
-#         string = input("Enter a string to push onto the stack: ")
-#         if stack.push(string):
-#             print("String pushed onto stack.")
-#         else:
-#             print("Stack is full, string not pushed.")
-#     elif choice == "2":
-#         string = stack.pop()
-#         if string is not None:
-#             print("Popped string:", string)
-#         else:
-#             print("Stack is empty.")
-#     elif choice == "3":
-#         count = stack.count()
-#         if count == 1:
-#             print("There is 1 string in the stack.")
-#         else:
-#             print("There are", count, "strings in the stack.")
-#     elif choice == "4":
-#         if stack.is_empty():
-#             print("Stack is empty.")
-#         else:
-#             print("Stack is not empty.")
-#     elif choice == "5":
-#         if stack.is_full():
-#             print("Stack is full.")
-#         else:
-#             print("Stack is not full.")
-#     elif choice == "6":
-#         stack.clear()
-#         print("Stack cleared.")
-#     elif choice == "7":
-#         string = stack.peek()
-#         if string is not None:
-#             print("Top string on stack:", string)
-#         else:
-#             print("Stack is empty.")
-#     elif choice == "0":
-#         print("Exiting program.")
-#         break
-#     else:
-#         print("Invalid choice, please try again.")
-#
-#
-# # Use example
-#
 # print(stack.push("first"))
 # print(stack.push("second"))
 # print(stack.count())
