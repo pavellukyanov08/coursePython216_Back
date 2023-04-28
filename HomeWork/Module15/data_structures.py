@@ -1,28 +1,31 @@
 # Task 1
 class Node:
-    def __init__(self, value):
+    def __init__(self, value, prev=None, next=None):
         self.value = value
-        self.next = None
-        self.prev = None
+        self.prev = prev
+        self.next = next
 
 
 class LinkedList:
     def __init__(self):
         self.head = None
 
+    # 1
     def append(self, value):
         new_node = Node(value)
 
         if self.head is None:
             self.head = new_node
             return
-        else:
-            current_node = self.head
-            while current_node.next:
-                current_node = current_node.next
-            current_node.next = new_node
-            new_node.prev = current_node
 
+        current_node = self.head
+        while current_node.next:
+            current_node = current_node.next
+
+        current_node.next = new_node
+        new_node.prev = current_node
+
+    # 2
     def remove(self, value):
         if self.head is None:
             print('Список пуст!')
@@ -42,15 +45,26 @@ class LinkedList:
                 else:
                     current_node = current_node.next
 
-    def show(self):
+    # 3
+    def show(self, reverse=False):
         if self.head is None:
             print('Список пустой')
-        else:
-            current_node = self.head
-            while current_node:
-                print(current_node.value)
+            return
+
+        current_node = self.head
+
+        if reverse:
+            while current_node.next is not None:
                 current_node = current_node.next
 
+        while current_node is not None:
+            print(current_node.value)
+            if reverse:
+                current_node = current_node.prev
+            else:
+                current_node = current_node.next
+
+    # 4
     def is_contains(self, value):
         current_node = self.head
         while current_node:
@@ -59,6 +73,7 @@ class LinkedList:
             current_node = current_node.next
         return False
 
+    # 5
     def replace(self, old_value, new_value):
         current_node = self.head
         while current_node:
@@ -92,7 +107,11 @@ while True:
         linked_list.remove(number)
 
     elif choice == 3:
-        linked_list.show()
+        reverse = input('Хотите перевернуть список (y/n)?: ')
+        if reverse.lower() == 'y':
+            linked_list.show(reverse=True)
+        else:
+            linked_list.show()
 
     elif choice == 4:
         number = int(input("Введите число: "))
