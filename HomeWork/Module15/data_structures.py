@@ -74,13 +74,15 @@ class LinkedList:
         return False
 
     # 5
-    def replace(self, old_value, new_value):
+    def replace(self, old_value, new_value, all_occurrences=False):
         current_node = self.head
         while current_node:
             if current_node.value == old_value:
                 current_node.value = new_value
-                break
+            if not all_occurrences:
+                return
             current_node = current_node.next
+        return
 
 
 linked_list = LinkedList()
@@ -96,11 +98,11 @@ while True:
 
     if choice == 1:
         number = int(input("Введите число: "))
-        if linked_list.is_contains(number):
-            print("Число уже есть в списке")
-        else:
-            linked_list.append(number)
-            print("Число добавлено в список")
+        # if linked_list.is_contains(number):
+        #     print("Число уже есть в списке")
+        # else:
+        linked_list.append(number)
+        print("Число добавлено в список")
 
     elif choice == 2:
         number = int(input("Введите число: "))
@@ -121,10 +123,18 @@ while True:
             print("Числа нет в списке")
 
     elif choice == 5:
-        old_number = int(input("Введите число, которое нужно заменить: "))
-        new_number = int(input("Введите новое число: "))
-        linked_list.replace(old_number, new_number)
-
+        number = int(input("Введите число, которое нужно заменить: "))
+        new_num = int(input("Введите новое число: "))
+        if linked_list.is_contains(number):
+            only_first = input('Хотите заменить только первое вхождение (y/n)?: ')
+            if only_first.lower() == 'y':
+                linked_list.replace(number, new_num)
+                print(f'Первое найденное число {new_num} было заменено на {new_num}')
+            else:
+                linked_list.replace(number, new_num, all_occurrences=True)
+                print(f'Все числа {number} были заменены на {new_num}')
+        else:
+            print(f'Число {number} отсутствует в списке')
     elif choice == 6:
         break
 
