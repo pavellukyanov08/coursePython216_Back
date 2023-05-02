@@ -1,3 +1,83 @@
+class Animal:
+    def __init__(self, name, sound):
+        self.name = name
+        self.sound = sound
+
+    def make_sound(self):
+        print(self.sound)
+
+class Dog(Animal):
+    def __init__(self, name):
+        super().__init__(name, "Woof!")
+
+class Cat(Animal):
+    def __init__(self, name):
+        super().__init__(name, "Meow!")
+
+dog1 = Dog("Rex")
+dog1.make_sound()  # выводит "Woof!"
+
+
+class Engine:
+    @staticmethod
+    def start():
+        print("Engine is started")
+
+    @staticmethod
+    def stop():
+        print("Engine is stopped")
+
+class Vehicle:
+    def __init__(self, engine):
+        self.engine = engine
+
+    def start_engine(self):
+        self.engine.start()
+
+    def stop_engine(self):
+        self.engine.stop()
+
+engine1 = Engine()
+vehicle1 = Vehicle(engine1)
+vehicle1.start_engine()
+vehicle1.stop_engine()
+
+
+class Student:
+    def __init__(self, name):
+        self.name = name
+
+class University:
+    def __init__(self):
+        self.students = []
+
+    def add_student(self, student):
+        self.students.append(student)
+
+    def get_students(self):
+        for student in self.students:
+            print(student.name)
+
+uni = University()
+student1 = Student("John")
+student2 = Student("Mary")
+uni.add_student(student1)
+uni.add_student(student2)
+uni.get_students()
+
+
+class MyClass:
+    def __init__(self, value):
+        self.__value = value
+
+    def __private_method(self):
+        return self.__value
+
+
+obj = MyClass(10)
+# print(obj.__private_method()) # Вызовет ошибку AttributeError
+# print(obj.__value) # Вызовет ошибку AttributeError
+
 class MyClass:
     def __init__(self, value):
         self._value = value
@@ -17,15 +97,35 @@ class MySubclass(MyClass):
 obj = MySubclass(10)
 print(obj.public_method())  # Выведет 10
 
-# class MyClass:
-#     def __init__(self, value):
-#         self.value = value
-#
-#     def public_method(self):
-#         return self.value
-#
-# obj = MyClass(10)
-# print(obj.public_method())
+
+class MyClass:
+    def __init__(self, value):
+        self._value = value
+
+    def _protected_method(self):
+        return self._value
+
+
+class MySubclass(MyClass):
+    def __init__(self, value):
+        super().__init__(value)
+
+    def public_method(self):
+        return self._protected_method()
+
+
+obj = MySubclass(10)
+print(obj.public_method())  # Выведет 10
+
+class MyClass:
+    def __init__(self, value):
+        self.value = value
+
+    def public_method(self):
+        return self.value
+
+obj = MyClass(10)
+print(obj.public_method())
 
 
 class Car:
@@ -33,20 +133,22 @@ class Car:
         self.engine = engine
         self.transmission = transmission
 
+
 class Engine:
-    @staticmethod
-    def start(self):
-        return "Engine started"
+    def __init__(self, model):
+        self.model = model
 
-class Transmission:
-    @staticmethod
-    def shift_gear(self):
-        return "Gear shifted"
 
-my_engine = Engine()
-my_transmission = Transmission()
-my_car = Car(my_engine, my_transmission)
-print(f'Статус двигателя: {my_car.engine.start()};\nСтатус КПП: {my_car.transmission.shift_gear()}')
+class Car:
+    def __init__(self, engine_model, wheels):
+        self.engine = Engine(engine_model)
+        self.wheels = wheels
+
+    def drive(self):
+        print(f"Автомобиль с {self.engine.model} двигателем и {self.wheels} колесами находится в движении")
+
+car1 = Car("V8", 4)
+car1.drive()
 
 class Animal:
     def __init__(self, name):
@@ -67,23 +169,23 @@ print(f'Вывод имени: {my_dog.name};\nВывод звука: {my_dog.ma
 
 
 # Создание класса
-class Student:
-    # конструктор класса, задаются атрибуты (поля класса)
-    def __init__(self, name, group, num_recbook):
-        self.name = name
-        self.group = group
-        self.num_recbook = num_recbook
-
-    def print_info(self): # создаются методы (функции) класса
-        print(f'Имя: {self.name};\n '
-              f'группа: {self.group};\n '
-              f'номер зачетной книжки: {self.num_recbook}')
-
-
-# Создание экземпляра класса, в который передаются значения для полей класса
-s = Student('Павел', '2-209и', 1231)
-# вызов метода класса для вывода информации на экран
-s.print_info()
+# class Student:
+#     # конструктор класса, задаются атрибуты (поля класса)
+#     def __init__(self, name, group, num_recbook):
+#         self.name = name
+#         self.group = group
+#         self.num_recbook = num_recbook
+#
+#     def print_info(self): # создаются методы (функции) класса
+#         print(f'Имя: {self.name};\n '
+#               f'группа: {self.group};\n '
+#               f'номер зачетной книжки: {self.num_recbook}')
+#
+#
+# # Создание экземпляра класса, в который передаются значения для полей класса
+# s = Student('Alex', 123, 321)
+# # вызов метода класса для вывода информации на экран
+# s.print_info()
 
 
 
