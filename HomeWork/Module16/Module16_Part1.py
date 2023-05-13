@@ -147,55 +147,37 @@
 
 
 # Task 3
-# import copy
-#
-#
-# class Prototype:
-#     def __init__(self):
-#         self._objects = {}
-#
-#     def register_object(self, model, obj):
-#         self._objects[model] = obj
-#
-#     def clone(self, model, **kwargs):
-#         obj = copy.deepcopy(self._objects.get(model))
-#         obj.__dict__.update(kwargs)
-#         return obj
-#
-#
-# class Car:
-#     def __init__(self):
-#         self._model = None
-#         self._year = None
-#         self._color = None
-#
-#     def __str__(self):
-#         return f"{self._model} ({self._year} {self._color})"
-#
-#     def set_model(self, model):
-#         self._model = model
-#
-#     def set_year(self, year):
-#         self._year = year
-#
-#     def set_color(self, color):
-#         self._color = color
-#
-#
-# car_prototype = Prototype()
-# car = Car()
-# car.set_model("Tesla")
-# car.set_year(2015)
-# car.set_color("red")
-# car_prototype.register_object("red_tesla", car)
-#
-# # создаем копию объекта
-# new_car = car_prototype.clone("red_tesla")
-# print(new_car)  # Tesla (red)
-#
-# # изменяем атрибуты копии объекта
-# new_car.set_model("BMW")
-# new_car.set_year(2020)
-# new_car.set_color("blue")
-# print(new_car)  # BMW (blue)
+from abc import ABC, abstractmethod
+from copy import deepcopy
 
+
+class Prototype(ABC):
+    @abstractmethod
+    def clone(self):
+        pass
+
+
+class Car(Prototype):
+    def __init__(self, mode, color, engine):
+        self.model = mode
+        self.color = color
+        self.engine = engine
+
+    def clone(self):
+        return deepcopy(self)
+
+    def __str__(self):
+        return f'{self.model} (color: {self.color},  engine: {self.engine})'
+
+
+car1 = Car('BMW M5', 'white', '4.4l')
+car2 = car1.clone()
+
+print(f'Первый объект: {car1}')
+print(f'Копия первого объекта: {car2}')
+print('----'*5)
+
+car2.model = 'Toyota Camry'
+car2.engine = '3.2l'
+
+print(f'Измененная копия первого объекта: {car2}')
