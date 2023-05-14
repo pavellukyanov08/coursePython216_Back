@@ -225,92 +225,122 @@
 
 
 # Task 3
-import logging
 import json
 
 
-class Reader:
-    def __init__(self, name, email, library_card_number):
-        self.name = name
-        self.email = email
-        self.library_card_number = library_card_number
-
-    def __str__(self):
-        return f"{self.name} ({self.email}, {self.library_card_number})"
+class Book:
+    def __init__(self, title, author, year):
+        self.title = title
+        self.author = author
+        self.year = year
 
 
 class Library:
     def __init__(self):
+        self.books = []
         self.readers = []
-        self.log = logging.getLogger("Library")
-        self.log.setLevel(logging.INFO)
-        formatter = logging.Formatter("%(asctime)s %(levelname)s %(message)s")
-        handler = logging.StreamHandler()
-        handler.setFormatter(formatter)
-        self.log.addHandler(handler)
 
-    def add_reader(self, name, email, library_card_number):
-        reader = Reader(name, email, library_card_number)
-        self.readers.append(reader)
-        self.log.info(f"Reader {reader} was added")
+    def add_book(self, book):
+        self.books.append(book)
 
-    def remove_reader(self, email):
+    def remove_book(self, book):
+        self.books.remove(book)
+
+    def add_reader(self, name):
+        self.readers.append(name)
+
+    def remove_reader(self, name):
+        self.readers.append(name)
+
+    def find_readers(self, name):
+        result = []
         for reader in self.readers:
-            if reader.email == email:
-                self.readers.remove(reader)
-                self.log.info(f"Reader {reader} was removed")
-                break
+            if name is None or reader.name == name:
+                result.append(reader)
+        return result
 
-    def update_reader(self, email, name=None, library_card_number=None):
-        for reader in self.readers:
-            if reader.email == email:
-                if name is not None:
-                    reader.name = name
-                if library_card_number is not None:
-                    reader.library_card_number = library_card_number
-                self.log.info(f"Reader {reader} was updated")
-                break
-
-    def search_readers(self, query):
-        results = []
-        for reader in self.readers:
-            if query in reader.name or query in reader.email or query in reader.library_card_number:
-                results.append(reader)
-        return results
-
-    def save_to_file(self, filename):
+    def save_readers(self, filename):
         with open(filename, "w") as f:
             data = {
                 "readers": [
-                    {"name": reader.name, "email": reader.email, "library_card_number": reader.library_card_number}
-                    for reader in self.readers
-                ]
+                    [{'name': reader.name, 'books': [book.title for book in reader.books]} for reader in
+                        self.readers]
+                ],
+                "books": [
+                    {'title': book.title, 'author': book.author, 'year': book.year, 'is_available': book.is_available}
+                    for book in self.books]
             }
             json.dump(data, f)
         self.log.info(f"Library data was saved to {filename}")
 
-    def load_from_file(self, filename):
-        with open(filename, "r") as f:
+    def load_file(self, filename):
+        with open(filename, 'r') as f:
             data = json.load(f)
-            self.readers = [
-                Reader(reader["name"], reader["email"], reader["library_card_number"])
-                for reader in data["readers"]
-            ]
+            books_data = data['books']
+
+            for book_data in books_data:
+                book = Book(book_data['title'], book_data['author'], book_data['year'])
+                book.is_available = book_data['is_available']
+                self.add_book(book)
+
+            readers_data = data['readers']
+            for reader_data in readers_data:
+                reader = Reader(reader_data['name'])
+                self.add_reader(reader)
+                for book_title in reader_data['books']:
+                    books = self.find_books(title=book_title, available_only=False)
+                    if books:
+                        reader.books.append(books[0])
+                        books[0].is_available = False
+
         self.log.info(f"Library data was loaded from {filename}")
 
 
-library = Library()
+class Reader:
+    def __init__(self, name, lib_card_number):
+        self.name = name
+        self.lib_card_number = lib_card_number
+        self.books = []
 
-library.add_reader("John Smith", "john@example.com", "12345")
-library.add_reader("Alice Johnson", "alice@example.com", "67890")
+    def get_book(self, book, library):
+        if library.find_books(title=book.title, author=book.author, year=book.year, available_only=True):
+            self.books.append(book)
+            book.is_available = False
+            return 'Книга получена'
+        else:
+            return 'Книга недоступна'
 
-print(library.search_readers("John"))
+    def return_book(self, book, library):
+        if book in self.books:
+            self.books.remove(book)
+            book.is_available = True
+            library.add_book(book)
+            return 'Книга возвращена'
+        else:
+            return 'Книга не найдена'
+
+    def __str__(self):
+        return f"{self.name} ({self.library_card_number})"
+
+
+lib = Library()
+
+reader1 = Reader('John', 123)
+reader2 = Reader('Sam', 312)
+
+book1 = Book("Война и мир", "Толстой", 1910)
+book2 = Book("Отцы и дети", "Тургенев", 1950)
+
+lib.add_reader(reader1)
+lib.add_reader(reader2)
+
+lib.add_book(book1)
+lib.add_book(book2)
+
+print(lib.find_readers("John"))
 # Output: [John Smith (john@example.com, 12345)]
 
-library.update_reader("john@example.com", name="Johnny Smith")
-print(library.search_readers("John"))
+print(lib.find_readers("Sam"))
 # Output: [Johnny Smith (john@example.com, 12345)]
 
-library.remove_reader("alice@example.com")
-print(library.search_readers("Alice"))
-# Output: []
+print(lib.remove_reader("Sam"))
