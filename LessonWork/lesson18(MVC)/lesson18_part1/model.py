@@ -19,7 +19,7 @@ class DecodeError(Exception):
 
 class Model:
     def __init__(self):
-        self.filepath = 'db.text'
+        self.filepath = 'db.txt'
         self.__articles = {}
         try:
             self.data = json.load(open(self.filepath, 'r', encoding='utf-8'))
@@ -35,11 +35,14 @@ class Model:
     def articles(self):
         return self.__articles
 
+    def save_articles(self):
+        dict_articles = {art.title: art.__dict__ for art in self.__articles.values()}
+        json.dump(dict_articles, open(self.filepath, 'w', encoding='utf-8'))
+
     def add_new_article(self, article_data):
         new_article = Article(*article_data.values())
         self.__articles[f'{new_article.title} {new_article.author}'] = new_article
-        dict_article = {art.title: art.__dict__ for art in self.__articles.values()}
-        json.dump(dict_article, open(self.filepath, 'w', encoding='utf-8'))
+        self.save_articles()
 
     def find_articles(self, criteria):
         articles = []
@@ -51,15 +54,19 @@ class Model:
                     if crit.lower() in prop.lower():
                         articles.append(article)
                         break
+
         return articles
 
     def delete_article(self, articles):
         if len(articles) == 0:
-            return 'Такой статьи не было найдено'
+            return "Такой статьи не было найдено!"
         elif len(articles) == 1:
             article = articles[0]
             key = f'{article.title} {article.author}'
             self.__articles.pop(key)
-            return 'Статья была удалена'
+            self.save_articles()
+            return 'Статья была удалена!'
         else:
             return 'Слишком много статей'
+
+
