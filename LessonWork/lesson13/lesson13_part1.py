@@ -29,7 +29,7 @@ import re
 # --------------------Файлы----------------------
 # 1.
 
-# text_file = 'text.txt'
+# text_file = 'numbers.txt'
 # banned_words_file = 'words.txt'
 # cleared_text_file = 'out.txt'
 # with open(text_file, 'r') as text, open(banned_words_file, 'r') as words:
