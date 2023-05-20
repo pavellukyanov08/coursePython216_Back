@@ -1,0 +1,1 @@
+{"qwe": {"type_shoes": "qwe", "gender": "qwe", "color": "qwe", "price": "qwe", "manufacturer": "qwe", "size": ""}}
