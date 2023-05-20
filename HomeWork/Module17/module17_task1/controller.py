@@ -28,10 +28,21 @@ class Controller:
             shoes = self.model.find_shoes(manuf)
             self.view.print_shoes(shoes)
         elif command == '4':
-            shoe_name = self.view.remove_by_manuf()
-            shoes = self.model.find_shoes([shoe_name])
+            # choice = input('Выберите способ удаления: (n - по номеру, m - производителю')
+            # if choice == 'n':
+            #     number = self.view.remove_by_num()
+            #     shoe_num = self.model.find_shoes(number)
+            #     remove_num_result = self.model.remove_shoes(shoe_num)
+            #     self.view.return_delete_result(remove_num_result)
+            # else:
+            # manuf = self.view.remove_by_manuf()
+            # shoe_manuf = self.model.find_shoes(manuf)
+            # remove_manuf_result = self.model.remove_shoes(shoe_manuf)
+
+            shoe_manuf = self.view.remove_by_manuf()
+            shoes = self.model.find_shoes([shoe_manuf])
             result = self.model.remove_shoes(shoes)
-            if result == 'Слишком много обуви.':
+            if result == 'Пар обуви слишком много':
                 self.view.print_shoes(shoes)
                 number = self.view.remove_by_num()
                 result = self.model.remove_shoes([shoes[number - 1]])
