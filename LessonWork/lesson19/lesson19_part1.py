@@ -138,11 +138,11 @@ class DiscountVIP:
 
 
 # Task
-class Pasta:
-    def choose_recipe(self):
-        pass
-
-    def make_recipe
+# class Pasta:
+#     def choose_recipe(self):
+#         pass
+#
+#     def make_recipe
 
 #     def __init__(self):
 #         self.type = None
