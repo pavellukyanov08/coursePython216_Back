@@ -60,6 +60,6 @@ class DifferentOperation:
 operation = DifferentOperation()
 
 # print(operation.read_write('readfile', 'writefile'))
-print(operation.convert_to_octal_system(5))
-print(operation.convert_to_hex_number(10))
-print(operation.convert_to_bin_number(15))
+print(operation.convert_to_octal_system(42))
+print(operation.convert_to_hex_number(42))
+print(operation.convert_to_bin_number(42))
