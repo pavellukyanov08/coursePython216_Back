@@ -27,7 +27,6 @@ import unittest
 
 # Task 2
 from module18_unittest import DifferentOperation
-import os
 
 
 class TestNumberList(unittest.TestCase):
