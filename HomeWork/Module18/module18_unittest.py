@@ -36,13 +36,16 @@
 # Task 2
 class DifferentOperation:
 
-    # @staticmethod
-    # def read_write(readfile, writefile):
-    #     with open(readfile, 'r', encoding='utf-8') as f:
-    #         f.readline(readfile)
+    @staticmethod
+    def save_to_file(filename):
+        with open(filename, 'w', encoding='utf-8') as f:
+            f.write('12345')
 
-        # with open(writefile, 'w', encoding='utf-8') as f:
-        #     f.write(writefile)
+    @staticmethod
+    def load_from_file(filename):
+        with open(filename, 'r', encoding='utf-8') as f:
+            value = f.read()
+            print(value)
 
     @staticmethod
     def convert_to_octal_system(number):
@@ -59,7 +62,9 @@ class DifferentOperation:
 
 operation = DifferentOperation()
 
-# print(operation.read_write('readfile', 'writefile'))
+operation.save_to_file('write.txt')
+operation.load_from_file('write.txt')
+
 print(operation.convert_to_octal_system(42))
 print(operation.convert_to_hex_number(42))
 print(operation.convert_to_bin_number(42))

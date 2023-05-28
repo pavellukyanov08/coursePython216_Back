@@ -27,11 +27,25 @@ import unittest
 
 # Task 2
 from module18_unittest import DifferentOperation
+import os
 
 
 class TestNumberList(unittest.TestCase):
     def setUp(self) -> None:
         self.number = 42
+        self.filename = 'write.txt'
+
+    # def tearDown(self):
+    #     if os.path.exists(self.filename):
+    #         os.remove(self.filename)
+
+    def test_save_and_load_from_file(self):
+        self.assertEqual('12345',
+                         DifferentOperation.save_to_file(self.filename),
+                         'В файл должно быть записано число 12345')
+        self.assertEqual('12345',
+                         DifferentOperation.load_from_file(self.filename),
+                         'При чтении должно появиться число 12345')
 
     def test_octal(self):
         self.assertEqual('0o52',
