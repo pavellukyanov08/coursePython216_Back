@@ -32,34 +32,26 @@ import os
 
 class TestNumberList(unittest.TestCase):
     def setUp(self) -> None:
-        self.number = 42
-        self.filename = 'write.txt'
+        self.value = DifferentOperation()
+        self.num = 42
+        self.value.set_value(self.num)
 
-    # def tearDown(self):
-    #     if os.path.exists(self.filename):
-    #         os.remove(self.filename)
-
-    def test_save_and_load_from_file(self):
-        self.assertEqual('12345',
-                         DifferentOperation.save_to_file(self.filename),
-                         'В файл должно быть записано число 12345')
-        self.assertEqual('12345',
-                         DifferentOperation.load_from_file(self.filename),
-                         'При чтении должно появиться число 12345')
+    def test_set_value(self):
+        self.assertEqual(42, DifferentOperation.get_value(self.value), 'Значение должно быть равно 10')
 
     def test_octal(self):
-        self.assertEqual('0o52',
-                         DifferentOperation.convert_to_octal_system(self.number),
+        self.assertEqual('52',
+                         DifferentOperation.convert_to_octal_system(self.value),
                          '42 в восьмиричной системе счиления должно быть равно равен 0o52')
 
     def test_hex(self):
-        self.assertEqual('0x2a',
-                         DifferentOperation.convert_to_hex_number(self.number),
+        self.assertEqual('2a',
+                         DifferentOperation.convert_to_hex_number(self.value),
                          '42 в восьмиричной системе счиления должно быть равно 0x2a')
 
     def test_bin(self):
-        self.assertEqual('0b101010',
-                         DifferentOperation.convert_to_bin_number(self.number),
+        self.assertEqual('101010',
+                         DifferentOperation.convert_to_bin_number(self.value),
                          '42 в восьмиричной системе счиления должно быть равно 0b101010')
 
 

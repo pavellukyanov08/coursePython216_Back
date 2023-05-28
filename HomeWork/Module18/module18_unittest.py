@@ -36,35 +36,27 @@
 # Task 2
 class DifferentOperation:
 
-    @staticmethod
-    def save_to_file(filename):
-        with open(filename, 'w', encoding='utf-8') as f:
-            f.write('12345')
+    def __init__(self):
+        self.value = None
 
-    @staticmethod
-    def load_from_file(filename):
-        with open(filename, 'r', encoding='utf-8') as f:
-            value = f.read()
-            print(value)
+    def get_value(self):
+        return self.value
 
-    @staticmethod
-    def convert_to_octal_system(number):
-        return oct(number)
+    def set_value(self, new_value):
+        self.value = new_value
 
-    @staticmethod
-    def convert_to_hex_number(number):
-        return hex(number)
+    def convert_to_octal_system(self):
+        return oct(self.value)[2:]
 
-    @staticmethod
-    def convert_to_bin_number(number):
-        return bin(number)
+    def convert_to_hex_number(self):
+        return hex(self.value)[2:]
+
+    def convert_to_bin_number(self):
+        return bin(self.value)[2:]
 
 
-operation = DifferentOperation()
-
-operation.save_to_file('write.txt')
-operation.load_from_file('write.txt')
-
-print(operation.convert_to_octal_system(42))
-print(operation.convert_to_hex_number(42))
-print(operation.convert_to_bin_number(42))
+# operation = DifferentOperation()
+#
+# print(operation.convert_to_octal_system())
+# print(operation.convert_to_hex_number())
+# print(operation.convert_to_bin_number())
