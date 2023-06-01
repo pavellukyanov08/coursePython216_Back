@@ -1,11 +1,7 @@
-from collections import Counter
-
-
+# Task 1
 def analysis_and_summarize_file(filename):
     with open(filename, 'r') as file:
         content = file.read().lower()
-    total_length, word_count, counter = 0, 0, 0
-    word_counts = Counter()
     word_freq = {}
 
     lines = content.split('\n')
@@ -23,7 +19,7 @@ def analysis_and_summarize_file(filename):
     total_word_length = sum(len(word) for word in content)
     avg_word_length = total_word_length / num_words
 
-    report = f'Анализ файла: {filename}\n'
+    report = f'АНАЛИЗ ФАЙЛА: {filename}\n\n'
     report += f'Кол-во строк в файле: {num_lines}\n'
     report += f'Кол-во слов в файле: {num_words}\n'
     report += f'Количество строк: {num_lines}\n'
