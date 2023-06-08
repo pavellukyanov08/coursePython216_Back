@@ -3,7 +3,6 @@ class User:
         self.name = name
         self.email = email
         self.role = role
-        self.assigned_tasks = []
 
     @staticmethod
     def create_account(name, email, role):
@@ -19,10 +18,15 @@ class User:
             self.role = role
 
     def view_assigned_tasks(self, task_manager):
-        for task in task_manager.tasks:
-            if task.is_assignee == self:
-                self.assigned_tasks.append(task)
-                print(f'Назначенные задачи: {self.assigned_tasks}')
+        # for task in task_manager.tasks:
+        #     if task.is_assignee == self:
+        #         print(f'Задача: {task.task_name}\n Назначена: {task.is_assignee.name}')
+        #         print()
+        assigned_tasks = [task for task in task_manager.tasks if task.is_assignee == self]
+        if assigned_tasks:
+            for task in assigned_tasks:
+                print(f'Задача: {task.task_name}\n Назначена: {task.is_assignee.name}')
+            print()
 
 
 class TaskManager:
@@ -37,7 +41,6 @@ class TaskManager:
 
     def assigning_tasks(self, user, task):
         if task in self.tasks:
-            self.tasks.append(task)
             self.is_assignee = user
 
     def mark_task_completed(self, task):
@@ -51,8 +54,8 @@ class TaskManager:
                 print("Статус: выполнена")
             else:
                 print("Статус: ожидает выполнения")
-            if task.is_assignee:
-                print(f"Назначена пользователю: {task.is_assignee.name}")
+            # if task.is_assignee:
+            #     print(f"Назначена пользователю: {task.is_assignee.name}")
             print()
 
 
@@ -62,7 +65,6 @@ task2 = TaskManager('Сделать уборку')
 
 admin = User("Sam", "admin@gmail.com", "Администратор")
 user1 = User("Alex", "john@gmail.com", "Пользователь")
-user2 = User("john", "alice@gmail.com", "Пользователь")
 
 # Добавление задач в TaskManager
 task1.adding_tasks(task1)
@@ -70,7 +72,7 @@ task2.adding_tasks(task2)
 
 # Назначение задач пользователям
 task1.assigning_tasks(user1, task1)
-task2.assigning_tasks(user2, task2)
+task2.assigning_tasks(admin, task2)
 
 # Пометка задачи как выполненной
 task1.mark_task_completed(task1)
@@ -81,4 +83,4 @@ task2.display_tasks()
 
 # Просмотр назначенных задач для пользователя
 user1.view_assigned_tasks(task1)
-user2.view_assigned_tasks(task2)
+admin.view_assigned_tasks(task2)
