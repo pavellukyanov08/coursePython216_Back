@@ -3,7 +3,7 @@ import socket
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 host = 'localhost'
-port = 1
+port = 1010
 
 client_socket.connect((host, port))
 
@@ -12,7 +12,7 @@ server_message = client_socket.recv(1024).decode()
 print(server_message)
 
 while True:
-    client_message = input('Введите сообщение: ')
+    client_message = input('Введите город для показа погоды: ')
     client_socket.send(client_message.encode())
 
     if not client_message:
