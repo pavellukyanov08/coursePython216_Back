@@ -208,4 +208,70 @@ mm = MultimediaMessaging()
 print(mm.send_multimedia_message('Hello world'))
 print(mm.receive_multimedia_message('Hey, user!'))
 print(mm.view_media_gallery('Hello world, Hey user!'))
+print()
 
+
+# Task 5
+class Logger(ABC):
+    @abstractmethod
+    def log_info(self, info):
+        pass
+
+    @abstractmethod
+    def log_warning(self, warning):
+        pass
+
+    @abstractmethod
+    def log_error(self, error):
+        pass
+
+
+class ConsoleLogger(Logger):
+    def log_info(self, info):
+        return f'Информация: {info}'
+
+    def log_warning(self, warning):
+        return f'Предупреждение: {warning}'
+
+    def log_error(self, error):
+        return f'Ошибка: {error}'
+
+
+class FileLogger(Logger):
+    def __init__(self, filename):
+        self.filename = filename
+
+    def log_info(self, info):
+        with open(self.filename, 'a') as f:
+            f.write(f'Информация: {info}')
+
+    def log_warning(self, warning):
+        with open(self.filename, 'a') as f:
+            f.write(f'Предупреждение: {warning}')
+
+    def log_error(self, error):
+        with open(self.filename, 'a') as f:
+            f.write(f'Ошибка: {error}')
+
+
+class DatabaseLogger(Logger):
+    def __init__(self, database):
+        self.database = []
+
+    def log_info(self, info):
+        self.database.append('Информация')
+
+    def log_warning(self, warning):
+        self.database.append('Предупреждение')
+
+    def log_error(self, error):
+        self.database.append('Ошибка')
+
+
+console_logger = ConsoleLogger()
+file_logger = FileLogger('log.txt')
+database_logger = DatabaseLogger('database')
+
+print(console_logger.log_info('Something info'))
+print(console_logger.log_warning('Something warning'))
+print(console_logger.log_error('Something error'))
