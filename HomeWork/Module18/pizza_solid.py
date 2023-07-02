@@ -3,34 +3,40 @@ from abc import ABC, abstractmethod
 
 class PizzaBase(ABC):
     @abstractmethod
-    def cost(self):
+    def get_cost(self):
+        pass
+
+    @abstractmethod
+    def get_pizza(self):
         pass
 
 
 class PizzaBase25cm(PizzaBase):
     @property
-    def cost(self):
-        return 1
+    def get_cost(self):
+        return 350
 
-    def __str__(self):
+    def get_pizza(self):
         return f'Основа для пиццы 25 см'
 
 
 class PizzaBase30cm(PizzaBase):
     @property
-    def cost(self):
-        return 1.44
+    def get_cost(self):
+        return 500
 
-    def __str__(self):
+    def get_pizza(self):
         return f'Основа для пиццы 30 см'
 
 
-class Topping:
-    def __init__(self):
-        self.name = self.__class__.__name__.lower()
+class PizzaTemplates(ABC):
+    @abstractmethod
+    def get_pizza(self):
+        pass
 
-    def __str__(self):
-        return self.name
+    @abstractmethod
+    def get_cost(self):
+        pass
 
 
 class Toppings:
@@ -38,44 +44,80 @@ class Toppings:
             'Bacon': 25, 'Mushrooms': 20, 'Olives': 25,
             'Chicken': 20, 'Pineapple': 20}
 
-    toppings = {}
+    def __init__(self, toppings=None):
+        self.toppings = toppings
+        self.toppings_cost = 0
 
-    @staticmethod
-    def init_toppings():
-        for key, value in Toppings.data.items():
-            Toppings.toppings[key] = (type(key, (Topping,), {'cost': value}))
+    def get_toppings(self):
+        if self.toppings is None:
+            return 'Топинги отсутствуют'
+        else:
+            return ', '.join(topp for topp in self.toppings)
+
+    def get_cost(self):
+        if self.toppings is not None:
+            for key, value in Toppings.data.items():
+                for topp in self.toppings:
+                    if key.lower() == topp.lower():
+                        self.toppings_cost += value
+        return self.toppings_cost
+
+
+class MargaritaPizza(PizzaTemplates):
+    def get_pizza(self, base=PizzaBase25cm()):
+        return 'Маргарита: сыр, маринара, соус, баклажаны'
+
+    def get_cost(self):
+        return 350
+
+
+class CarbonaraPizza(PizzaTemplates):
+    def get_pizza(self, base=PizzaBase30cm()):
+        return 'Карбонара: моцарелла, сын пармезан, яйца, бекон'
+
+    def get_cost(self):
+        return 430
+
+
+class OwnPizza(PizzaTemplates):
+    def get_pizza(self):
+        return 'Own pizza'
+
+    def get_cost(self):
+        return 600
 
 
 class Pizza:
-    def __init__(self, base, *toppings):
+    def __init__(self, base, pizza, toppings):
         self.base = base
+        self.pizza = pizza
         self.toppings = toppings
 
     @property
-    def cost(self):
-        return sum((top.cost for top in self.toppings)) * self.base.cost
+    def get_total_cost(self):
+        return self.base.get_cost() + self.pizza.get_cost() + self.toppings.get_cost()
 
 
-class PizzaTemplates:
+class PaymentMethod:
+    def exec_transaction(self, amount):
+        raise NotImplementedError
+
+
+class CardPay(PaymentMethod):
+    def exec_transaction(self, amount):
+        return f'Заказ оплачен картой. Итоговая сумма: {amount} руб.'
+
+
+class CashPay(PaymentMethod):
+    def exec_transaction(self, amount):
+        return f'Заказ оплачен наличными. Итоговая сумма: {amount} руб.'
+
+
+class Payment:
     @staticmethod
-    def margarita(base=PizzaBase25cm()):
-        return Pizza(base,
-                     Toppings.toppings['Cheese'],
-                     Toppings.toppings['Tomatoes'])
-
-    @staticmethod
-    def pepperoni(base=PizzaBase25cm()):
-        return Pizza(base,
-                     Toppings.toppings['Cheese'],
-                     Toppings.toppings['Pepperoni'])
-
-    @staticmethod
-    def bacon_and_mushrooms(base=PizzaBase25cm()):
-        return Pizza(base,
-                     Toppings.toppings['Cheese'],
-                     Toppings.toppings['Bacon'],
-                     Toppings.toppings['Mushrooms'],
-                     Toppings.toppings['Tomatoes'])
+    def do_payment(payment, amount):
+        response = payment.exec_transaction(amount)
+        print(response)
 
 
 class Pizzeria:
@@ -83,7 +125,7 @@ class Pizzeria:
         self.sold_pizzas = 0
         self.revenue = 0
         self.profit = 0
-        Toppings.init_toppings()
+        self.basket = []
 
     def run(self):
         command = None
@@ -113,14 +155,6 @@ class Pizzeria:
             elif command == '5':
                 self.pay_card()
 
-    @staticmethod
-    def extract_price(line):
-        if line.startswith('Total:'):
-            return float(line.split(':')[1].strip())
-        else:
-            price_index = line.rfind(' - ') + 3
-            return float(line[price_index:])
-
     def make_an_order(self):
         self.basket = []
 
@@ -128,62 +162,88 @@ class Pizzeria:
         command = input('Выберите опцию:\n'
                         '1. Выбрать одну из готовых пицц\n'
                         '2. Собрать пиццу самому!\n')
-        pizza = None
+
         if command == '1':
-            base = 'Введите номер пиццы, которую вы бы хотели заказать:\n'
-            templates = list(PizzaTemplates.__dict__.items())
-            for i, pizza in enumerate(templates):
-                if isinstance(pizza[1], staticmethod):
-                    base += f'{i}. {pizza[0]} - {", ".join(map(str, pizza[1]().toppings))}\n'
-            choice = int(input(base))
-            pizza_maker = templates[choice - 1][1]
-            size = int(input('Введите размер пиццы(25 / 30): '))
+            pizza_templates = {'1': MargaritaPizza(), '2': CarbonaraPizza()}
+            choice_pizza = input('Выберите пиццу: \n'
+                                 '1: Маргарита\n'
+                                 '2: Карбонара\n')
+
+            size = input('Выберите размер (25 или 30 см): ')
+            pizza_template = pizza_templates.get(choice_pizza)
+
+            if pizza_template is None:
+                print('Неверный ввод')
+
             if size == '25':
-                pizza = pizza_maker(PizzaBase25cm())
-            # else:
-            #     pizza = pizza_maker(PizzaBase30cm())
+                pizza_base = PizzaBase25cm()
+
+            elif size == '30':
+                pizza_base = PizzaBase30cm()
+
+            else:
+                print('Ошибка ввода')
+                return
+
+            command_topping = input('Хотите добавить начинку? (y/n): ').strip().lower()
+            if command_topping == 'y':
+                toppings = input('Введите начинку через запятую: ').strip().split(',')
+                pizza_toppings = Toppings(toppings)
+            else:
+                pizza_toppings = Toppings()
+            pizza = Pizza(pizza_base, pizza_template, pizza_toppings)
+            self.basket.append(pizza)
+            print('Пицца добавлена в корзину.')
 
         elif command == '2':
-            base_size = int(input('Введите размер пиццы (25 / 30): '))
-            if base_size == 25:
-                base = PizzaBase25cm()
+            size = int(input('Выберите размер (25 или 30 см): '))
+            if size == '25':
+                pizza_base = PizzaBase25cm()
+
+            elif size == '30':
+                pizza_base = PizzaBase30cm()
+
             else:
-                base = PizzaBase30cm()
-            toppings = []
+                print('Ошибка ввода')
+                return
+
             while True:
                 topping_choice = input('Введите название топпинга (для завершения введите "Готово"): ')
                 if topping_choice == 'Готово':
                     break
-                if topping_choice in Toppings.toppings:
-                    toppings.append(Toppings.toppings[topping_choice])
                 else:
-                    print('Некорректный топпинг.')
-            pizza = Pizza(base, *toppings)
-        else:
-            print('Некорректный выбор опций.')
-
-        if pizza:
-            self.basket.append(pizza)
-            print('Пицца добавлена в корзину')
+                    pizza_toppings = Toppings()
+                    pizza = Pizza(pizza_base, OwnPizza(), pizza_toppings)
+                    self.basket.append(pizza)
+                    print('Пицца добавлена в корзину.')
 
     def remove_pizza(self):
         if len(self.basket) > 0:
             index = int(input('Введите номер пиццы для удаления: '))
-            if 0 <= index < len(self.basket):
-                removed_pizza = self.basket.pop(index)
-                print(f'Пицца "{removed_pizza}" удалена из корзины.')
-            else:
-                print('Ошибка: введен неверный номер пиццы.')
+            removed_pizza = self.basket.pop(index)
+            print(f'Пицца "{removed_pizza}" удалена из корзины.')
         else:
             print('Корзина пуста.')
 
     def view_order(self):
-        if len(self.basket) > 0:
-            print('Ваш заказ:')
-            for i, pizza in enumerate(self.basket):
-                print(f'{i}. {pizza} - {", ".join(map(str, pizza.toppings))}')
-        else:
+        if len(self.basket) == 0:
             print('Корзина пуста.')
+
+        else:
+            print('Ваш заказ:')
+            basket_info = ''
+            for i, pizza in enumerate(self.basket, 1):
+                basket_info += f'{i}. {pizza.base.get_pizza()} - {pizza.pizza.get_cost()} -> ' \
+                               f'with {pizza.toppings.get_toppings()} for {pizza.get_total_cost} руб. \n'
+            print(basket_info)
+            return basket_info
+
+    def save_cart(self):
+        with open('file.txt', 'w') as f:
+            data = self.view_order()
+            if data == 'Корзина пуста.':
+                return
+            f.write(data)
 
     def clear_basket(self):
         if len(self.basket) > 0:
@@ -193,59 +253,31 @@ class Pizzeria:
             print('Корзина пуста.')
 
     def checkout(self):
-        if len(self.basket) > 0:
-            print('Оплата:')
-            print('1. Наличные')
-            print('2. Карта')
-            payment_method = input('Выберите способ оплаты: ')
-            if payment_method == '1':
-                self.pay_cash()
-            elif payment_method == '2':
-                self.pay_card()
-            else:
-                print('Ошибка: неверный выбор способа оплаты.')
-        else:
+        if not self.basket:
             print('Корзина пуста.')
 
-    def pay_cash(self):
-        total_cost = sum(pizza.cost for pizza in self.basket)
-        print(f'Общая стоимость заказа: {total_cost} руб.')
-        received_amount = float(input('Введите полученную сумму: '))
-        if received_amount >= total_cost:
-            change = received_amount - total_cost
-            print(f'Спасибо за оплату! Сдача: {change} руб.')
-            self.sold_pizzas += len(self.basket)
-            self.revenue += total_cost
-            self.profit += total_cost
-            self.basket = []
-            self.save_order_to_file()  # Сохраняем заказ в файл
-        else:
-            print('Ошибка: недостаточно средств.')
+        payment_method = input('Выберите способ оплаты: \n'
+                               '1. Наличные'
+                               '2. Карта')
 
-    def pay_card(self):
-        total_cost = sum(pizza.cost for pizza in self.basket)
-        print(f'Общая стоимость заказа: {total_cost} руб.')
+        total_cost = sum(pizza.get_total_cost for pizza in self.basket)
+
+        if payment_method == '1':
+            Payment.do_payment(CashPay, total_cost)
+            received_amount = float(input('Введите полученную сумму: '))
+
+            if received_amount >= total_cost:
+                change = received_amount - total_cost
+                print(f'Спасибо за оплату! Сдача: {change} руб.')
+
+        elif payment_method == '2':
+            Payment.do_payment(CardPay, total_cost)
+            print('Оплата произведена успешно.')
+
         self.sold_pizzas += len(self.basket)
         self.revenue += total_cost
-        self.profit += total_cost
-        self.basket = []
-        self.save_order_to_file()  # Сохраняем заказ в файл
-        print('Оплата произведена успешно.')
-
-    def save_order_to_file(self):
-        with open('orders.txt', 'W') as file:
-            for pizza in self.basket:
-                file.write(str(pizza) + '\n')
-
-    def show_sales_data(self):
-        total_revenue = 0
-        with open('orders.txt', 'r') as file:
-            print('Продажи:')
-            for line in file:
-                print(line, end='')
-                if line.startswith('Total:'):
-                    total_revenue += self.extract_price(line)
-            print(f'Выручка: {total_revenue} руб.')
+        self.profit += total_cost - total_cost * 0.10
+        self.make_an_order()
 
 
 def main():
