@@ -1,5 +1,8 @@
 import sqlite3 as sq
 
+# В дз использовано 2 базы: 'clinic' (создание таблиц, запросы на вставку, обновление, изменение удаление данных и
+# изменение структуры самой таблицы) и 'shop' (база с прошлых дз, взята под запросы с использованием связей)
+
 # with sq.connect('clinic.db') as conn:
 with sq.connect('shop.db') as conn:
     cur = conn.cursor()
@@ -22,6 +25,13 @@ with sq.connect('shop.db') as conn:
     #                 address text
     #                 )''')
 
+    # cur.execute('''CREATE TABLE registrator (
+    #                 staff_id INTEGER PRIMARY KEY,
+    #                 name TEXT NOT NULL,
+    #                 age INTEGER,
+    #                 address TEXT
+    #                 );''')
+
     # Запросы на вставку
     # clients = [
     #     (2, 'Michael', 20, 'Попова 98'),
@@ -42,11 +52,8 @@ with sq.connect('shop.db') as conn:
     # ]
     # cur.executemany('''insert into doctors values(?, ?, ?, ?, ?)''', doctors)
 
-
     # cur.executemany('''insert into clients values(?, ?, ?, ?)''', clients)
     # cur.execute('''insert into registrator values(3, 'Natalia', 24, 'Социалистический 90')''')
-
-
 
     # Изменения таблиц
     # cur.execute('''alter table doctors
@@ -64,17 +71,16 @@ with sq.connect('shop.db') as conn:
     #
     #         cur.execute('''insert into clients values(?, ?, ?, ?)''', (client_id, name, age, address))
 
-
     # Взял нашу базу, которая была с дз, переименовал в 'shop'
     # cur.execute('''select cname, c.city, sp.sname, sp.city
     #                 from customers c
     #                 join salespeople sp on c.snum = sp.snum
     #                 where c.city = sp.city''')
 
-    # cur.execute('''select cname, c.city, sp.sname, sp.city
-    #                 from customers c
-    #                 join salespeople sp on c.snum = sp.snum
-    #                 where c.city = sp.city''')
+    # cur.execute('''select cname, avg(amt)
+                        # from customers c, orders o
+                        # where amt < (select avg(amt) from orders)
+                        # group by cname''')
 
     # cur.execute('''select cname, sname, com
     #                 from customers c, salespeople sp
