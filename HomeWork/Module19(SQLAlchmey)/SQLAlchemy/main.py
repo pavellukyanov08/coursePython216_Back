@@ -29,58 +29,68 @@ class UserMenu:
                 print()
 
                 seller_name = input('Введите имя: ')
-                if seller_name in session.query(Sale).join(Salesman).filter_by(sls_name=seller_name):
-                    print(seller_name)
-                else:
-                    print('Продавец не найден')
+                for i, seller in enumerate(session.query(Sale.sales_id,
+                                                         Sale.customer_id,
+                                                         Sale.customer_id,
+                                                         Sale.amt,
+                                                         Salesman.sls_name)
+                        .join(Salesman, Sale.salesman_id == Salesman.salesman_id).filter_by(sls_name=seller_name), 1):
+                    if seller_name in seller:
+                        print(f'{i}. {seller}')
+                    else:
+                        print('Продавец не найден')
                 print('===' * 20)
 
             elif command == '3':
                 # Макс. сумма сделки
-                for deal in session.query(func.max(Sale.amt)):
-                    print(*deal)
-                # max_deal = session.query(func.max(Sale.amt))
-                # print(max_deal.first()[0])
+                max_deal = session.query(func.max(Sale.amt))
+                print(max_deal.first()[0])
 
             elif command == '4':
                 # Мин. сумма сделки
-                for deal in session.query(func.min(Sale.amt)):
-                    print(*deal)
+                min_deal = session.query(func.min(Sale.amt))
+                print(min_deal.first()[0])
 
             elif command == '5':
                 # Макс. сумма сделки для каждого продавца
-                for i, deal in enumerate(session.query(func.max(Sale.amt), Salesman.sls_name).join(Salesman).group_by(
-                        Salesman.sls_name), 1):
+                for i, deal in enumerate(session.query(func.max(Sale.amt), Salesman.sls_name)
+                                                .join(Salesman, Sale.salesman_id == Salesman.salesman_id)
+                                                        .group_by(Salesman.sls_name), 1):
                     print(f'{i}. {deal}')
 
             elif command == '6':
                 # Мин. сумма сделки для каждого продавца
-                for i, deal in enumerate(session.query(func.min(Sale.amt), Salesman.sls_name).join(Salesman).group_by(
-                        Salesman.sls_name), 1):
+                for i, deal in enumerate(session.query(func.min(Sale.amt), Salesman.sls_name)
+                                                .join(Salesman, Sale.salesman_id == Salesman.salesman_id)
+                                                        .group_by(Salesman.sls_name), 1):
                     print(f'{i}. {deal}')
 
             elif command == '7':
                 # Макс. сумма сделки для каждого покупателя
-                for i, deal in enumerate(session.query(func.max(Sale.amt), Customer.cust_name).join(Customer).group_by(
-                        Customer.cust_name), 1):
+                for i, deal in enumerate(session.query(func.max(Sale.amt), Customer.cust_name)
+                                                .join(Customer, Sale.customer_id == Customer.customer_id)
+                                                    .group_by(Customer.cust_name), 1):
                     print(f'{i}. {deal}')
 
             elif command == '8':
                 # Мин. сумма сделки для каждого покупателя
-                for i, deal in enumerate(session.query(func.min(Sale.amt), Customer.cust_name).join(Customer).group_by(
-                        Customer.cust_name), 1):
+                for i, deal in enumerate(session.query(func.min(Sale.amt), Customer.cust_name)
+                                                .join(Customer, Sale.customer_id == Customer.customer_id)
+                                                    .group_by(Customer.cust_name), 1):
                     print(f'{i}. {deal}')
 
             elif command == '9':
                 # Макс. по сумме сделка для каждого продавца. ДОДЕЛАТЬ!!!
-                for i, deal in enumerate(session.query(func.sum(Sale.amt), Salesman.sls_name).join(Salesman).group_by(
-                        Salesman.sls_name), 1):
+                for i, deal in enumerate(session.query(func.sum(Sale.amt), Salesman.sls_name)
+                                                .join(Salesman, Sale.salesman_id == Salesman.salesman_id)
+                                                    .group_by(Salesman.sls_name), 1):
                     print(f'{i}. {deal}')
 
             elif command == '10':
                 # Мин. по сумме сделка для каждого продавца. ДОДЕЛАТЬ!!!
-                for i, deal in enumerate(session.query(func.sum(Sale.amt), Salesman.sls_name).join(
-                        Salesman).group_by(Salesman.sls_name).order_by(Salesman.amt.desc()), 1):
+                for i, deal in enumerate(session.query(func.sum(Sale.amt), Salesman.sls_name)
+                                                .join(Salesman, Sale.salesman_id == Salesman.salesman_id)
+                                                    .group_by(Salesman.sls_name).order_by(Salesman.amt.desc()), 1):
                     print(f'{i}. {deal}')
 
             elif command == '11':
@@ -172,6 +182,21 @@ class UserMenu:
                 session.add(salesman)
 
                 session.commit()
+
+        elif choice_action == '4':
+            print('Меню удаление данных \n')
+
+            choice_table = input('Выберите таблицу (1 - customers, 2 - sales, 3 - salesmen): ')
+            if choice_table == '1':
+                for i, cust in enumerate(session.query(Customer), 1):
+                    print(f'{i}. {cust}')
+
+                ids = input("Введите ID покупателей, которые хотите удалить: ").split()
+                for id in ids:
+                    if id in session.query(Customer):
+                        record = session.get()
+                    else:
+                        print("Запись с указанным ID не найдена.")
 
 
 if __name__ == '__main__':
