@@ -62,24 +62,124 @@ from jinja2 import Template
 # msg = tm.render(cities=cities)
 # print(msg)
 
-menu = [
-    {'url': '/index', 'name': 'Главная'},
-    {'url': '/news', 'name': 'Новости'},
-    {'url': '/about', 'name': 'О нас'},
-    {'url': '/shop', 'name': 'Магазин'},
-    {'url': '/contacts', 'name': 'Контакты'},
+# menu = [
+#     {'url': '/index', 'name': 'Главная'},
+#     {'url': '/news', 'name': 'Новости'},
+#     {'url': '/about', 'name': 'О нас'},
+#     {'url': '/shop', 'name': 'Магазин'},
+#     {'url': '/contacts', 'name': 'Контакты'},
+# ]
+#
+# tm = Template('''
+# <ul>
+# {% for el in menu -%}
+#     {%- if el.url == 'index' %}
+#     <li><a href="/{{ el.url}}" class="active">{{ el.name}}</a></li>
+#     {%- else -%}
+#     <li><a href="/{{ el.url}}">{{ el.name}}</a></li>
+#     {%- endif %}
+# {% endfor %}
+# </ul>
+# ''')
+# msg = tm.render(menu=menu)
+# print(msg)
+
+# cars = [
+#     {'model': 'Audi', 'price': 2000},
+#     {'model': 'Skoda', 'price': 1900},
+#     {'model': 'Renault', 'price': 1500},
+#     {'model': 'Toyota', 'price': 2100}
+# ]
+#
+# tm = Template('Результат фильтра {{ (cars | min(attribute="price")).model }}')
+# msg = tm.render(cars=cars)
+# print(msg)
+
+# person = [
+#     {'name': 'Виталий', 'year': 18, 'weight': 70},
+#     {'name': 'Никита', 'year': 19, 'weight': 72.4},
+#     {'name': 'Алексей', 'year': 21, 'weight': 76.1},
+# ]
+
+# tm = """
+# {% for u in users -%}
+#     {% filter title %}  {{ u.name }} человек {% endfilter %}
+#     {% filter random %} {{ u.weight }} {% endfilter %}
+# {% endfor -%}
+# """
+#
+# tm = Template(tm)
+# msg = tm.render(users=person)
+# print(msg)
+
+# html = """
+# {% macro input(name, value='', type='text', size=20) %}
+#     <input type="{{ type }} " name="{{ name }}" value="{{ value }}" size="{{ size }}">
+# {% endmacro %}
+#
+# {% for name in ['username', 'email', 'password'] %}
+#     <p> {{ input(name) }} </p>
+# {% endfor %}
+# """
+#
+# tm = Template(html)
+# msg = tm.render()
+# print(msg)
+
+
+# html = """
+# {% macro input(name, placeholder, type='text') %}
+#     <input type="{{ type }} " name="{{ name }}" placeholder="{{ placeholder }}">
+# {% endmacro %}
+#
+# <p> {{ input('firstname', 'Имя')}} </p>
+# <p> {{ input('lastname', 'Фамилия')}} </p>
+# <p> {{ input('address', 'Адрес')}} </p>
+# <p> {{ input('phone', 'Телефон', 'tel')}} </p>
+# <p> {{ input('email', 'Почта', 'email')}} </p>
+#
+# """
+
+# tm = Template(html)
+# msg = tm.render()
+# print(msg)
+
+
+# person = [
+#     {'name': 'Виталий', 'year': 18, 'weight': 70},
+#     {'name': 'Никита', 'year': 19, 'weight': 72.4},
+#     {'name': 'Алексей', 'year': 21, 'weight': 76.1},
+# ]
+#
+# html = """
+# {% macro list_users(users) %}
+# <ul>
+#     {% for u in users %}
+#         <li>{{ u.name }}</li>
+#     {% endfor %}
+# </ul>
+# {% endmacro %}
+#
+# {{ list_users(users) }}
+# """
+#
+# tm = Template(html)
+# msg = tm.render(users=person)
+# print(msg)
+
+from jinja2 import Environment, FileSystemLoader
+
+file_loader = FileSystemLoader('templates')
+
+env = Environment(loader=file_loader)
+
+tm = env.get_template('main.html')
+
+person = [
+    {'name': 'Виталий', 'year': 18, 'weight': 70},
+    {'name': 'Никита', 'year': 19, 'weight': 72.4},
+    {'name': 'Алексей', 'year': 21, 'weight': 76.1},
 ]
 
-tm = Template('''
-<ul>
-{% for el in menu -%}
-    {%- if el.url == 'index' %}
-    <li><a href="/{{ el.url}}" class="active">{{ el.name}}</a></li>
-    {%- else -%}
-    <li><a href="/{{ el.url}}">{{ el.name}}</a></li>
-    {%- endif %}
-{% endfor %}
-</ul>
-''')
-msg = tm.render(menu=menu)
+msg = tm.render(users=person, title='About Jinja')
 print(msg)
