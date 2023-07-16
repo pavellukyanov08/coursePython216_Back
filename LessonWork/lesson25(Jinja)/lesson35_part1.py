@@ -173,13 +173,9 @@ file_loader = FileSystemLoader('templates')
 
 env = Environment(loader=file_loader)
 
-tm = env.get_template('main.html')
+tm = env.get_template('about.html')
 
-person = [
-    {'name': 'Виталий', 'year': 18, 'weight': 70},
-    {'name': 'Никита', 'year': 19, 'weight': 72.4},
-    {'name': 'Алексей', 'year': 21, 'weight': 76.1},
-]
+subs = ['Культура', 'Наука', 'Спорт']
 
-msg = tm.render(users=person, title='About Jinja')
+msg = tm.render(list_table=subs)
 print(msg)
