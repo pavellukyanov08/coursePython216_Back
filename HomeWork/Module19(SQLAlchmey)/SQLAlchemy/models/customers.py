@@ -21,7 +21,8 @@ class Customer(Base):
         self.salesman_id = salesman_id
 
     def __str__(self):
-        return f'Покупатель: {self.cust_name}, ' \
+        return f'ID покупателя: {self.customer_id}, ' \
+            f'Покупатель: {self.cust_name}, ' \
             f'Город: {self.cust_city}, ' \
             f'ID продавца: {self.salesman_id} '
 

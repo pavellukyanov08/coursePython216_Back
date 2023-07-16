@@ -19,6 +19,6 @@ class Salesman(Base):
         self.sls_city = sls_city
 
     def __str__(self):
-        return f'Продавец: {self.sls_name}, ' \
-            f'Город: {self.sls_city}, ' \
-            f'ID продавца: {self.salesman_id}'
+        return f'ID продавца: {self.salesman_id}, ' \
+            f'Продавец: {self.sls_name}, ' \
+            f'Город: {self.sls_city}, '

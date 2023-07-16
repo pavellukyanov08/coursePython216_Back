@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Float, ForeignKey
 
 from .database import Base
 
+
 # from sqlalchemy.orm import relationship
 
 
@@ -23,7 +24,7 @@ class Sale(Base):
 
     def __str__(self):
         return f'ID товара: {self.sales_id}, ' \
-            f'ID покупателя: {self.customer_id}, ' \
-            f'ID продавца: {self.salesman_id}, ' \
-            f'Сумма заказа: {self.amt}, ' \
-            f'Дата заказа: {self.sales_date}'
+               f'ID продавца: {self.salesman_id}, ' \
+               f'ID покупателя: {self.customer_id}, ' \
+               f'Сумма заказа: {self.amt}, ' \
+               f'Дата заказа: {self.sales_date}'

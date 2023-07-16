@@ -8,6 +8,8 @@ from models.customers import Customer
 from models.database import DATABASE_NAME, Session
 import create_database as db_creator
 
+from save_to_file_decorator import save_to_file
+
 
 class UserMenu:
     session = Session()
@@ -80,39 +82,45 @@ class UserMenu:
                     print(f'{i}. {deal}')
 
             elif command == '9':
-                # Макс. по сумме сделка для каждого продавца. ДОДЕЛАТЬ!!!
+                # Макс. по сумме сделка для каждого продавца.
                 for i, deal in enumerate(session.query(func.sum(Sale.amt), Salesman.sls_name)
                                                 .join(Salesman, Sale.salesman_id == Salesman.salesman_id)
-                                                    .group_by(Salesman.sls_name), 1):
+                                                    .group_by(Salesman.sls_name).order_by(func.sum(Sale.amt).desc()),
+                                         1):
                     print(f'{i}. {deal}')
 
             elif command == '10':
-                # Мин. по сумме сделка для каждого продавца. ДОДЕЛАТЬ!!!
+                # Мин. по сумме сделка для каждого продавца.
                 for i, deal in enumerate(session.query(func.sum(Sale.amt), Salesman.sls_name)
                                                 .join(Salesman, Sale.salesman_id == Salesman.salesman_id)
-                                                    .group_by(Salesman.sls_name).order_by(Salesman.amt.desc()), 1):
+                                                    .group_by(Salesman.sls_name).order_by(func.sum(Sale.amt)),
+                                         1):
                     print(f'{i}. {deal}')
 
             elif command == '11':
                 # Макс. сумма покупок покупателя.
-                for i, deal in enumerate(session.query(func.max(Sale.amt), Customer.cust_name).join(Customer), 1):
+                for i, deal in enumerate(session.query(func.max(Sale.amt), Customer.cust_name)
+                                            .join(Customer, Sale.customer_id == Customer.customer_id), 1):
                     print(f'{i}. {deal}')
 
             elif command == '12':
                 # Мин. сумма покупок покупателя.
-                for i, deal in enumerate(session.query(func.min(Sale.amt), Customer.cust_name).join(Customer), 1):
+                for i, deal in enumerate(session.query(func.min(Sale.amt), Customer.cust_name)
+                                            .join(Customer, Sale.customer_id == Customer.customer_id), 1):
                     print(f'{i}. {deal}')
 
             elif command == '13':
                 # Ср. сумма покупок для каждого покупателя.
-                for i, deal in enumerate(session.query(func.avg(Sale.amt), Customer.cust_name).join(Customer).group_by(
-                        Customer.cust_name), 1):
+                for i, deal in enumerate(session.query(func.avg(Sale.amt), Customer.cust_name)
+                                            .join(Customer, Sale.customer_id == Customer.customer_id)
+                                                .group_by(Customer.cust_name), 1):
                     print(f'{i}. {deal}')
 
             elif command == '14':
                 # Ср. сумма покупок для каждого продавца.
-                for i, deal in enumerate(session.query(func.avg(Sale.amt), Salesman.sls_name).join(Salesman).group_by(
-                        Salesman.sls_name), 1):
+                for i, deal in enumerate(session.query(func.avg(Sale.amt), Salesman.sls_name)
+                                                    .join(Salesman, Sale.salesman_id == Salesman.salesman_id)
+                                                        .group_by(Salesman.sls_name), 1):
                     print(f'{i}. {deal}')
 
         elif choice_action == '2':
@@ -158,45 +166,102 @@ class UserMenu:
             choice_table = input('Выберите таблицу (1 - customers, 2 - sales, 3 - salesmen): ')
 
             if choice_table == '1':
-                for i, cust in enumerate(session.query(Customer), 1):
-                    print(f'{i}. {cust}')
+                user_request = [print(f'{i}. {cust}') for i, cust in enumerate(session.query(Customer), 1)]
 
-                id = input("Введите ID покупателя, которого хотите обновить: ")
-                if id in session.query(Customer):
-                    record = session.query(Customer).filter_by(id=id).one()
+                cust_id = int(input("Введите ID покупателя, которого хотите обновить: "))
+                key_request = session.get(Customer, cust_id)
+                if key_request:
+                    new_cust_id = int(input('Введите новый id покупателя: '))
+                    new_cust_name = input('Введите новое имя покупателя: ')
+                    new_cust_city = input('Введите новый город покупателя: ')
+                    new_salesman_id = int(input('Введите новый id продавца: '))
+                    query = session.get(Customer, cust_id)
+                    update_query = session.query(Customer).filter_by(customer_id=cust_id)
+                    data_update = dict(customer_id=new_cust_id, cust_name=new_cust_name,
+                                           cust_city=new_cust_city,
+                                        salesman_id=new_salesman_id)
+                    update_query.update(data_update)
+                    session.commit()
                 else:
                     print("Запись с указанным ID не найдена.")
 
-                new_cust_id = int(input('Введите id покупателя: '))
-                new_cust_name = input('Введите имя покупателя: ')
-                new_cust_city = input('Введите город покупателя: ')
-                new_salesman_id = int(input('Введите id продавца: '))
+            if choice_table == '2':
+                user_request = [print(f'{i}. {sale}') for i, sale in enumerate(session.query(Sale), 1)]
 
-                # Обновляем значения атрибутов объекта
-                record.new_cust_id = new_cust_id
-                session.commit()
+                sale_id = int(input("Введите ID товара, которого хотите обновить: "))
+                key_request = session.get(Sale, sale_id)
 
-                print("Данные успешно обновлены!")
+                if key_request:
+                    new_sales_id = int(input('Введите новый id товара: '))
+                    new_slsman_id = int(input('Введите новый id продавца: '))
+                    new_cust_id = int(input('Введите новый id покупателя: '))
+                    new_amt = float(input('Введите новую цену товара: '))
+                    query = session.get(Sale, sale_id)
+                    update_query = session.query(Sale).filter_by(sales_id=sale_id)
+                    data_update = dict(sales_id=new_sales_id,
+                                       salesman_id=new_slsman_id,
+                                       customer_id=new_cust_id,
+                                       amt=new_amt)
+                    update_query.update(data_update)
+                    session.commit()
+                else:
+                    print("Запись с указанным ID не найдена.")
 
-                salesman = Salesman(new_salesman_id, new_sls_name, new_sls_city)
-                session.add(salesman)
+            if choice_table == '3':
+                user_request = [print(f'{i}. {seller}') for i, seller in enumerate(session.query(Salesman), 1)]
 
-                session.commit()
+                seller_id = int(input("Введите ID продавца, которого хотите обновить: "))
+                id_request = session.get(Salesman, seller_id)
+                if id_request:
+                    new_salesman_id = int(input('Введите новый id продавца: '))
+                    new_sls_name = input('Введите новое имя продавца: ')
+                    new_sls_city = input('Введите новый город продавца: ')
+                    query = session.get(Salesman, seller_id)
+                    update_query = session.query(Salesman).filter_by(salesman_id=seller_id)
+                    data_update = dict(salesman_id=new_salesman_id,
+                                       sls_name=new_sls_name,
+                                       sls_city=new_sls_city)
+                    update_query.update(data_update)
+                    session.commit()
+                else:
+                    print("Запись с указанным ID не найдена.")
 
         elif choice_action == '4':
-            print('Меню удаление данных \n')
+            print('Меню удаления данных \n')
 
             choice_table = input('Выберите таблицу (1 - customers, 2 - sales, 3 - salesmen): ')
             if choice_table == '1':
-                for i, cust in enumerate(session.query(Customer), 1):
-                    print(f'{i}. {cust}')
+                user_request = [print(f'{i}. {cust}') for i, cust in enumerate(session.query(Customer), 1)]
 
-                ids = input("Введите ID покупателей, которые хотите удалить: ").split()
-                for id in ids:
-                    if id in session.query(Customer):
-                        record = session.get()
-                    else:
-                        print("Запись с указанным ID не найдена.")
+                cust_id = input("Введите ID покупателя, который хотите удалить: ")
+                record = session.get(Customer, cust_id)
+                if record:
+                    session.delete(record)
+                    session.commit()
+                else:
+                    print("Запись с указанным ID не найдена.")
+
+            if choice_table == '2':
+                user_request = [print(f'{i}. {sale}') for i, sale in enumerate(session.query(Sale), 1)]
+
+                sales_id = input("Введите ID товара, который хотите удалить: ")
+                record = session.get(Sale, sales_id)
+                if record:
+                    session.delete(record)
+                    session.commit()
+                else:
+                    print("Запись с указанным ID не найдена.")
+
+            if choice_table == '3':
+                user_request = [print(f'{i}. {seller}') for i, seller in enumerate(session.query(Salesman), 1)]
+
+                seller_id = input("Введите ID продавца, который хотите удалить: ")
+                record = session.get(Salesman, seller_id)
+                if record:
+                    session.delete(record)
+                    session.commit()
+                else:
+                    print("Запись с указанным ID не найдена.")
 
 
 if __name__ == '__main__':
