@@ -3,9 +3,6 @@ from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from .database import Base
 
 
-# from sqlalchemy.orm import relationship
-
-
 class Sale(Base):
     __tablename__ = 'sales'
 
