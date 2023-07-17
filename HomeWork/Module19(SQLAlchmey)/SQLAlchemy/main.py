@@ -1,6 +1,24 @@
 import os
 
-from sqlalchemy import and_, not_, or_, func
+from query_func import \
+    key_query, \
+    id_request, \
+    get_records, \
+    get_deal_by_salesman, \
+    max_sum_deal, \
+    min_sum_deal, \
+    max_sum_deal_by_specific_salesman, \
+    min_sum_deal_by_specific_salesman, \
+    max_sum_deal_by_specific_customer, \
+    min_sum_deal_by_specific_customer, \
+    max_sum_deal_by_all_salesman, \
+    min_sum_deal_by_all_salesman, \
+    max_sum_deal_by_all_customer, \
+    avg_sum_sale_by_customer, \
+    avg_sum_sale_by_seller
+
+from sqlalchemy import func
+
 from models.salesmen import Salesman
 from models.sales import Sale
 from models.customers import Customer
@@ -10,10 +28,10 @@ import create_database as db_creator
 
 from save_to_file_decorator import save_to_file
 
+session = Session()
 
-class UserMenu:
-    session = Session()
 
+def user_menu():
     while True:
         choice_action = input('Выберите действие (1 - выборка, 2 - вставка, 3 - обновление, 4 - удаление): ')
         if choice_action == '1':
@@ -21,107 +39,99 @@ class UserMenu:
 
             if command == '1':
                 # Все сделки
-                for i, elem in enumerate(session.query(Sale), 1):
-                    print(f'{i}. {elem}')
+                all_deal = [print(f'{i}. {deal}') for i, deal in enumerate(get_records(Sale), 1)]
 
             elif command == '2':
                 # Сделки конкретного продавца
-                for i, salesman in enumerate(session.query(Salesman), 1):
-                    print(f'{i}. {salesman}')
+                all_seller = [print(f'{i}. {seller}') for i, seller in enumerate(get_records(Salesman), 1)]
                 print()
 
-                seller_name = input('Введите имя: ')
-                for i, seller in enumerate(session.query(Sale.sales_id,
-                                                         Sale.customer_id,
-                                                         Sale.customer_id,
-                                                         Sale.amt,
-                                                         Salesman.sls_name)
-                        .join(Salesman, Sale.salesman_id == Salesman.salesman_id).filter_by(sls_name=seller_name), 1):
-                    if seller_name in seller:
-                        print(f'{i}. {seller}')
-                    else:
-                        print('Продавец не найден')
+                user_query = get_deal_by_salesman(int(input('Введите ID: ')))
+                if user_query:
+                    for row in user_query:
+                        print(row)
+                else:
+                    print('Продавец не найден')
+
                 print('===' * 20)
 
             elif command == '3':
                 # Макс. сумма сделки
-                max_deal = session.query(func.max(Sale.amt))
-                print(max_deal.first()[0])
+                print(max_sum_deal())
 
             elif command == '4':
                 # Мин. сумма сделки
-                min_deal = session.query(func.min(Sale.amt))
-                print(min_deal.first()[0])
+                print(min_sum_deal())
 
             elif command == '5':
-                # Макс. сумма сделки для каждого продавца
-                for i, deal in enumerate(session.query(func.max(Sale.amt), Salesman.sls_name)
-                                                .join(Salesman, Sale.salesman_id == Salesman.salesman_id)
-                                                        .group_by(Salesman.sls_name), 1):
-                    print(f'{i}. {deal}')
+                # Макс. сумма сделки для конкретного продавца
+                all_seller = [print(f'{i}. {seller}') for i, seller in enumerate(get_records(Salesman), 1)]
+
+                user_query = max_sum_deal_by_specific_salesman(int(input('Введите ID продавца: ')))
+
+                if user_query:
+                    for row in user_query:
+                        print(row)
+                else:
+                    print('Продавец не найден')
 
             elif command == '6':
-                # Мин. сумма сделки для каждого продавца
-                for i, deal in enumerate(session.query(func.min(Sale.amt), Salesman.sls_name)
-                                                .join(Salesman, Sale.salesman_id == Salesman.salesman_id)
-                                                        .group_by(Salesman.sls_name), 1):
-                    print(f'{i}. {deal}')
+                # Мин. сумма сделки для конкретного продавца
+                all_seller = [print(f'{i}. {seller}') for i, seller in enumerate(get_records(Salesman), 1)]
+
+                user_query = min_sum_deal_by_specific_salesman(int(input('Введите ID продавца: ')))
+
+                if user_query:
+                    for row in user_query:
+                        print(row)
+                else:
+                    print('Продавец не найден')
 
             elif command == '7':
-                # Макс. сумма сделки для каждого покупателя
-                for i, deal in enumerate(session.query(func.max(Sale.amt), Customer.cust_name)
-                                                .join(Customer, Sale.customer_id == Customer.customer_id)
-                                                    .group_by(Customer.cust_name), 1):
-                    print(f'{i}. {deal}')
+                # Макс. сумма сделки для конкретного покупателя
+                all_customers = [print(f'{i}. {cust}') for i, cust in enumerate(get_records(Customer), 1)]
+
+                user_query = max_sum_deal_by_specific_customer(int(input('Введите ID покупателя: ')))
+
+                if user_query:
+                    for row in user_query:
+                        print(row)
+                else:
+                    print('Покупатель не найден')
 
             elif command == '8':
-                # Мин. сумма сделки для каждого покупателя
-                for i, deal in enumerate(session.query(func.min(Sale.amt), Customer.cust_name)
-                                                .join(Customer, Sale.customer_id == Customer.customer_id)
-                                                    .group_by(Customer.cust_name), 1):
-                    print(f'{i}. {deal}')
+                # Мин. сумма сделки для конкретного покупателя
+                all_customers = [print(f'{i}. {cust}') for i, cust in enumerate(get_records(Customer), 1)]
+
+                user_query = min_sum_deal_by_specific_customer(int(input('Введите ID покупателя: ')))
+
+                if user_query:
+                    for row in user_query:
+                        print(row)
+                else:
+                    print('Покупатель не найден')
 
             elif command == '9':
-                # Макс. по сумме сделка для каждого продавца.
-                for i, deal in enumerate(session.query(func.sum(Sale.amt), Salesman.sls_name)
-                                                .join(Salesman, Sale.salesman_id == Salesman.salesman_id)
-                                                    .group_by(Salesman.sls_name).order_by(func.sum(Sale.amt).desc()),
-                                         1):
-                    print(f'{i}. {deal}')
+                # Продавец, у которого макс. сумма продаж по всем сделкам
+                user_query = [print(f'{i}. {seller}') for i, seller in enumerate(max_sum_deal_by_all_salesman(), 1)]
 
             elif command == '10':
-                # Мин. по сумме сделка для каждого продавца.
-                for i, deal in enumerate(session.query(func.sum(Sale.amt), Salesman.sls_name)
-                                                .join(Salesman, Sale.salesman_id == Salesman.salesman_id)
-                                                    .group_by(Salesman.sls_name).order_by(func.sum(Sale.amt)),
-                                         1):
-                    print(f'{i}. {deal}')
+                # Продавец, у которого мин. сумма продаж по всем сделкам
+                user_query = [print(f'{i}. {seller}') for i, seller in enumerate(min_sum_deal_by_all_salesman(), 1)]
 
             elif command == '11':
-                # Макс. сумма покупок покупателя.
-                for i, deal in enumerate(session.query(func.max(Sale.amt), Customer.cust_name)
-                                            .join(Customer, Sale.customer_id == Customer.customer_id), 1):
-                    print(f'{i}. {deal}')
+                # Покупателя, у которого макс. сумма покупок по всем сделкам
+                user_query = [print(f'{i}. {cust}') for i, cust in enumerate(max_sum_deal_by_all_customer(), 1)]
 
             elif command == '12':
-                # Мин. сумма покупок покупателя.
-                for i, deal in enumerate(session.query(func.min(Sale.amt), Customer.cust_name)
-                                            .join(Customer, Sale.customer_id == Customer.customer_id), 1):
-                    print(f'{i}. {deal}')
+                # Ср. сумма покупок для каждого покупателя.
+                user_query = [print(f'{i}. {cust}') for i, cust in enumerate(avg_sum_sale_by_customer(int(input(
+                                                                                    'Введите ID покупателя: '))), 1)]
 
             elif command == '13':
-                # Ср. сумма покупок для каждого покупателя.
-                for i, deal in enumerate(session.query(func.avg(Sale.amt), Customer.cust_name)
-                                            .join(Customer, Sale.customer_id == Customer.customer_id)
-                                                .group_by(Customer.cust_name), 1):
-                    print(f'{i}. {deal}')
-
-            elif command == '14':
                 # Ср. сумма покупок для каждого продавца.
-                for i, deal in enumerate(session.query(func.avg(Sale.amt), Salesman.sls_name)
-                                                    .join(Salesman, Sale.salesman_id == Salesman.salesman_id)
-                                                        .group_by(Salesman.sls_name), 1):
-                    print(f'{i}. {deal}')
+                user_query = [print(f'{i}. {seller}') for i, seller in enumerate(avg_sum_sale_by_seller(int(input(
+                    'Введите ID покупателя: '))), 1)]
 
         elif choice_action == '2':
             print('Меню вставки данных \n')
@@ -169,7 +179,8 @@ class UserMenu:
                 user_request = [print(f'{i}. {cust}') for i, cust in enumerate(session.query(Customer), 1)]
 
                 cust_id = int(input("Введите ID покупателя, которого хотите обновить: "))
-                key_request = session.get(Customer, cust_id)
+                key_request = id_request(Customer, cust_id)
+
                 if key_request:
                     new_cust_id = int(input('Введите новый id покупателя: '))
                     new_cust_name = input('Введите новое имя покупателя: ')
@@ -177,9 +188,10 @@ class UserMenu:
                     new_salesman_id = int(input('Введите новый id продавца: '))
                     query = session.get(Customer, cust_id)
                     update_query = session.query(Customer).filter_by(customer_id=cust_id)
-                    data_update = dict(customer_id=new_cust_id, cust_name=new_cust_name,
-                                           cust_city=new_cust_city,
-                                        salesman_id=new_salesman_id)
+                    data_update = dict(customer_id=new_cust_id,
+                                       cust_name=new_cust_name,
+                                       cust_city=new_cust_city,
+                                       salesman_id=new_salesman_id)
                     update_query.update(data_update)
                     session.commit()
                 else:
@@ -189,7 +201,7 @@ class UserMenu:
                 user_request = [print(f'{i}. {sale}') for i, sale in enumerate(session.query(Sale), 1)]
 
                 sale_id = int(input("Введите ID товара, которого хотите обновить: "))
-                key_request = session.get(Sale, sale_id)
+                key_request = id_request(Sale, sale_id)
 
                 if key_request:
                     new_sales_id = int(input('Введите новый id товара: '))
@@ -211,8 +223,9 @@ class UserMenu:
                 user_request = [print(f'{i}. {seller}') for i, seller in enumerate(session.query(Salesman), 1)]
 
                 seller_id = int(input("Введите ID продавца, которого хотите обновить: "))
-                id_request = session.get(Salesman, seller_id)
-                if id_request:
+                key_request = id_request(Salesman, seller_id)
+
+                if key_request:
                     new_salesman_id = int(input('Введите новый id продавца: '))
                     new_sls_name = input('Введите новое имя продавца: ')
                     new_sls_city = input('Введите новый город продавца: ')
@@ -234,7 +247,8 @@ class UserMenu:
                 user_request = [print(f'{i}. {cust}') for i, cust in enumerate(session.query(Customer), 1)]
 
                 cust_id = input("Введите ID покупателя, который хотите удалить: ")
-                record = session.get(Customer, cust_id)
+                record = id_request(Customer, cust_id)
+
                 if record:
                     session.delete(record)
                     session.commit()
@@ -244,8 +258,9 @@ class UserMenu:
             if choice_table == '2':
                 user_request = [print(f'{i}. {sale}') for i, sale in enumerate(session.query(Sale), 1)]
 
-                sales_id = input("Введите ID товара, который хотите удалить: ")
-                record = session.get(Sale, sales_id)
+                sales_id = int(input("Введите ID товара, который хотите удалить: "))
+
+                record = id_request(Sale, sales_id)
                 if record:
                     session.delete(record)
                     session.commit()
@@ -256,7 +271,8 @@ class UserMenu:
                 user_request = [print(f'{i}. {seller}') for i, seller in enumerate(session.query(Salesman), 1)]
 
                 seller_id = input("Введите ID продавца, который хотите удалить: ")
-                record = session.get(Salesman, seller_id)
+                record = id_request(Salesman, seller_id)
+
                 if record:
                     session.delete(record)
                     session.commit()
@@ -268,4 +284,5 @@ if __name__ == '__main__':
     db_is_created = os.path.exists(DATABASE_NAME)
     if not db_is_created:
         db_creator.create_database()
-    UserMenu()
+
+    user_menu()
