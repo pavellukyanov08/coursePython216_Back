@@ -11,10 +11,6 @@ from save_to_file_decorator import save_to_file
 session = Session()
 
 
-def key_query(table_name, ids):
-    return session.get(table_name, ids)
-
-
 def id_request(table_name, ids):
     return session.get(table_name, ids)
 

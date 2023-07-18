@@ -1,7 +1,6 @@
 import os
 
 from query_func import \
-    key_query, \
     id_request, \
     get_records, \
     get_deal_by_salesman, \
@@ -47,6 +46,7 @@ def user_menu():
                 print()
 
                 user_query = get_deal_by_salesman(int(input('Введите ID: ')))
+
                 if user_query:
                     for row in user_query:
                         print(row)
@@ -246,12 +246,13 @@ def user_menu():
             if choice_table == '1':
                 user_request = [print(f'{i}. {cust}') for i, cust in enumerate(session.query(Customer), 1)]
 
-                cust_id = input("Введите ID покупателя, который хотите удалить: ")
-                record = id_request(Customer, cust_id)
+                cust_id = int(input("Введите ID покупателя, который хотите удалить: "))
+                record = session.query(Customer).filter(Customer.customer_id == cust_id).first()
 
                 if record:
                     session.delete(record)
                     session.commit()
+                    print('Запись удалена')
                 else:
                     print("Запись с указанным ID не найдена.")
 
@@ -260,22 +261,25 @@ def user_menu():
 
                 sales_id = int(input("Введите ID товара, который хотите удалить: "))
 
-                record = id_request(Sale, sales_id)
+                record = session.query(Sale).filter(Sale.sales_id == sales_id).first()
+
                 if record:
                     session.delete(record)
                     session.commit()
+                    print('Запись удалена')
                 else:
                     print("Запись с указанным ID не найдена.")
 
             if choice_table == '3':
                 user_request = [print(f'{i}. {seller}') for i, seller in enumerate(session.query(Salesman), 1)]
 
-                seller_id = input("Введите ID продавца, который хотите удалить: ")
-                record = id_request(Salesman, seller_id)
+                seller_id = int(input("Введите ID продавца, который хотите удалить: "))
+                record = session.query(Salesman).filter(Salesman.salesman_id == seller_id).first()
 
                 if record:
                     session.delete(record)
                     session.commit()
+                    print('Запись удалена')
                 else:
                     print("Запись с указанным ID не найдена.")
 
