@@ -1,7 +1,7 @@
 from sqlalchemy import func
 
-from models.customers import Customer
 from models.sales import Sale
+from models.customers import Customer
 from models.salesmen import Salesman
 
 from models.database import Session
