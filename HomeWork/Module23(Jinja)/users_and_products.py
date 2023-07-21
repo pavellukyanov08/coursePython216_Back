@@ -4,7 +4,7 @@ file_loader = FileSystemLoader('templates')
 
 env = Environment(loader=file_loader)
 
-us = env.get_template('products.html')
+prod = env.get_template('users_and_products.html')
 
 products = [
     {'name': 'Paper', 'price': 5},
@@ -12,6 +12,13 @@ products = [
     {'name': 'Potato', 'price': 20},
     {'name': 'Cucumber', 'price': 30},
     {'name': 'Carrot', 'price': 40}
+]
+
+users = [
+    {'name': 'Sam', 'email': 'sam@mail.ru'},
+    {'name': 'John', 'email': 'john@yandex.ru'},
+    {'name': 'Michael', 'email': 'michael@gmail.com'},
+    {'name': 'Adam', 'email': 'adam@gmail.com'}
 ]
 
 # product = '''
@@ -40,6 +47,6 @@ products = [
 # '''
 
 # prod = Template(product)
-res = us.render(products=products)
+res = prod.render(products=products, users=users)
 
 print(res)
