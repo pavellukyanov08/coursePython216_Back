@@ -14,6 +14,8 @@ def index():
     return render_template('index.html', title='Главная', menu=menu)
 
 
+
+
 @app.route('/about')
 def about():
     return render_template('about.html', title='Об авторе', menu=menu)
