@@ -6,13 +6,12 @@
 
 {% block content %}
 {{ super() }}
-
 <form method="post" class="form-contacts">
-    <p>Имя: <input type="text" name="username" required></p>
+    <p>Name: <input type="text" name="username" required></p>
     <p>Email: <input type="email" name="email" required></p>
-    <p>Сообщение:</p>
+    <p>Message:</p>
     <p><textarea name="message" cols="30" rows="10"></textarea></p>
-    <p><input type="submit" value="Отправить сообщение"></p>
+    <p><input type="submit" value="Send message"></p>
 </form>
 
 {% endblock %}

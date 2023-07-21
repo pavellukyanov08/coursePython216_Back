@@ -1,0 +1,77 @@
+.container,
+body, html {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  padding: 0;
+  font-weight: 400;
+  font-family: "Open Sans", "Arial", sans-serif;
+  background-color: #f9fdff;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1000px;
+  min-width: 320px;
+  margin: 0 auto;
+}
+
+
+/* Начало блога */
+h2 {
+  text-align: center;
+  padding: 20px 0 20px 0;
+}
+
+.auth-info p {
+  font-size: 19px;
+}
+
+.info-block {
+  margin: 0 auto;
+}
+
+.dev-block {
+  display: flex;
+  padding: 6px;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+.auth-img {
+  border-right: 2px solid black;
+}
+
+.auth-info {
+  padding: 0 10px;
+  line-height: 1.5;
+  border-right: 2px solid black;
+}
+
+h3 {
+  text-align: center;
+  padding: 10px 0;
+}
+
+li {
+  font-size: 20px;
+}
+
+.other-links p {
+  text-decoration: none;
+  color: black;
+  padding: 0 10px;
+  text-align: justify;
+  padding-bottom: 0.5em;
+}
+
