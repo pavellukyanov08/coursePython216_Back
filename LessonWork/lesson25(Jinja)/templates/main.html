@@ -1,5 +1,5 @@
 {% include 'header.html' ignore missing %}
-{% import 'dialogs.html' as dig %}
+{% import 'dialogs.html' as dlg %}
 
 <ul>
     {% for user in users %}
@@ -7,6 +7,6 @@
     {% endfor %}
 </ul>
 
-{ dlg.dialog_1('Внимание!', 'Это текстовый диалог') }
+{{ dlg.dialog_1('Внимание!', 'Это текстовый диалог') }}
 
 {% include 'footer.html' %}
