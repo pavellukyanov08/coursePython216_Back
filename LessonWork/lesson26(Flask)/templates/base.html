@@ -9,18 +9,19 @@
         {% else %}
             Про Flask
         {% endif %}
-        {% endblock %}
-    </title>
+        {% endblock %}</title>
 </head>
 <body>
 
 {% block content %}
 <ul class="menu">
     {% for i in menu %}
-    <li><a href="{{ i.url}}">{{ i.name }}</a></li>
+    <li>
+        <a href="{{ i.url }}">{{ i.name }}</a>
+    </li>
     {% endfor %}
 </ul>
-<div class="menu">
+<div class="container">
     {% if title %}
     <h1>{{ title }}</h1>
     {% else %}
