@@ -9,18 +9,22 @@
         {% else %}
             Про Flask
         {% endif %}
-        {% endblock %}</title>
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
 {% block content %}
+
 <ul class="menu">
     {% for i in menu %}
     <li>
-        <a href="{{ i.url }}">{{ i.name }}</a>
+        <a href="{{ i.url }}">{{ i.title }}</a>
     </li>
     {% endfor %}
 </ul>
+
 <div class="container">
     {% if title %}
     <h1>{{ title }}</h1>
@@ -28,6 +32,11 @@
     <h1>Про Flask</h1>
     {% endif %}
 </div>
+
+{% for cat, msg in get_flashed_messages(True) %}
+    <div class="flash {{ cat }}"> {{ msg }}</div>
+{% endfor %}
+
 {% endblock %}
 
 </body>

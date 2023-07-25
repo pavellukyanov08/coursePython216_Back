@@ -5,7 +5,17 @@
 {% endblock %}
 
 {% block content %}
-<h1>Главная страница</h1>
 {{ super() }}
-<h3>Содержимое главной страницы</h3>
+<hr>
+    <h2>Список статей</h2>
+    <ul>
+        {% for post in posts %}
+        <li>
+            <p class="title">
+                <a href="/post/{{ post.url }}">{{ post.title }}</a>
+            </p>
+            <div class="announce">{{ post.text[:240] }}</div>
+        </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

@@ -15,4 +15,10 @@
     <p><input type="submit" value="Отправить сообщение"></p>
 </form>
 
+{% if username and email %}
+    <p>Имя пользователя: " {{ username }}</p>
+    <p>Email: " {{ email }}</p>
+    <p>Сообщение: " {{ message }}</p>
+{% endif %}
+
 {% endblock %}
