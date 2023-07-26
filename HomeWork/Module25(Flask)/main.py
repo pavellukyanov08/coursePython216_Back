@@ -50,7 +50,7 @@ def photos():
     db = DataBase(db_con)
     return render_template('photos.html', title='Фото',
                            menu=db.get_menu(),
-                           photo=db.get_photos())
+                           photos=db.get_photos())
 
 
 @app.route('/about')

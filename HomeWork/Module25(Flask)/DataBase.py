@@ -21,36 +21,17 @@ class DataBase:
         return self._get_objects('menu')
 
     def get_photos(self):
-        try:
-            self.__cur.execute(f'SELECT photo FROM photos')
-            res = self.__cur.fetchall()
-            if res:
-                return res
-        except IOError as e:
-            print('Ошибка чтения данных', e)
-            return False
+        return self._get_objects('photos')
 
     def add_photo(self):
         try:
-            # folder_path = 'static/img'
-            # for image in os.listdir(folder_path):
-            #     if image.lower().endswith(('.png', '.jpg', '.jpeg')):
-            with open('static/img/photo_2x1.jpg', 'rb') as img_f:
-                img_data = img_f.read()
-                db_img = sq.Binary(img_data)
-                # print(db_img)
-                self.__cur.execute(f'''INSERT INTO photos VALUES (1, ?)''', db_img)
-                self.__db.commit()
-
-            # folder_path = 'static/img'
-            # for image in os.listdir(folder_path):
-            #     if image.lower().endswith(('.png', '.jpg', '.jpeg')):
-            #         with open(os.path.join(folder_path, image), 'rb') as img_f:
-            #             img_data = img_f.read()
-            #             db_img = sq.Binary(img_data)
-            #             print(db_img)
-            #             self.__cur.execute(f'''INSERT INTO photos VALUES (1, ?)''', db_img)
-            #             self.__db.commit()
+            folder_path = 'static/img'
+            for image in os.listdir(folder_path):
+                if image.lower().startswith('photo') and image.endswith(('.png', '.jpg', '.jpeg')):
+                    with open(os.path.join(folder_path, image), 'rb') as img_f:
+                        img_data = img_f.read()
+                        self.__cur.execute(f'''INSERT INTO photos VALUES (null, ?)''', (sq.Binary(img_data),))
+                        self.__db.commit()
 
             return True
         except IOError as e:
