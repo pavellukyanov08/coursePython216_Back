@@ -1,0 +1,41 @@
+body {
+    background: rgb(167, 167, 62);
+    margin: 0;
+    padding: 0;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    background: rgb(236, 231, 222);
+    padding: 20px;
+    margin-top: 0;
+}
+
+.menu a {
+    text-decoration: none;
+    color: black;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.flash {
+    padding: 10px;
+    width: 300px;
+}
+
+.flash.success {
+    border: 1px solid #21DB56;
+    background: #AEFFC5;
+}
+
+.flash.error {
+    border: 1px solid #FF5343;
+    background: #ff9c9c;
+}
