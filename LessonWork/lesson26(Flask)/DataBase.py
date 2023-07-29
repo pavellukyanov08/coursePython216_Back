@@ -1,5 +1,8 @@
 import sqlite3
 from time import time
+import re
+
+from flask import url_for
 
 
 class DataBase:
@@ -30,6 +33,11 @@ class DataBase:
             if res['count'] > 0:
                 print('Статья с таким url уже существует!')
                 return False
+
+            base = url_for('static', filename='img')
+            text = re.sub(r'(?P<tag><img\s+[^>]*src=)(?P<quote>[\'"])(?P<url>.*)(?P=quote)>',
+                          r'\g<tag>' + base + r'/\g<url>>', text)
+
 
             tm = time()
             self.__cur.execute('INSERT INTO posts VALUES (NULL, ?, ?, ?, ?)',
