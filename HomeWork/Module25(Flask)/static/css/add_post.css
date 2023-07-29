@@ -1,0 +1,64 @@
+.container,
+body, html {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, p, ul {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  padding: 0;
+  font-weight: 400;
+  font-family: "Open Sans", "Arial", sans-serif;
+  background-color: #f9fdff;
+  margin: 0;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  font-size: 20px;
+  background: rgb(236, 231, 222);
+  padding: 20px;
+  margin-top: 0;
+}
+
+.menu a {
+  text-decoration: none;
+  color: black;
+}
+
+h2 {
+  text-align: center;
+  padding: 50px 50px;
+}
+
+form {
+  padding-left: 30px;
+}
+
+.article_url, 
+.article_name, 
+.article_preview, 
+.article_preview_field,
+.article_text,
+.article_text_field {
+  padding-bottom: 10px;
+}
+
+.article_url, 
+.article_name, 
+.article_preview, 
+.article_text {
+  /* width: 300px; */
+}
+
+button {
+  width: 150px;
+  height: 40px;
+}
+
+

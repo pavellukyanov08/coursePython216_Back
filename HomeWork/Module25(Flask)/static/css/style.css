@@ -1,0 +1,75 @@
+.container,
+body, html {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, p, ul {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  padding: 0;
+  font-weight: 400;
+  font-family: "Open Sans", "Arial", sans-serif;
+  background-color: #f9fdff;
+  margin: 0;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  font-size: 20px;
+  background: rgb(236, 231, 222);
+  padding: 20px;
+  margin-top: 0;
+}
+
+.menu a {
+  text-decoration: none;
+  color: black;
+}
+
+section {
+  max-width: 1220px;
+  min-width: 320px;
+  margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+  padding: 50px 50px;
+}
+
+.add_post {
+  display: inline-block;
+  color: black;
+  text-decoration: none;
+  font-size: 17px;
+  margin-bottom: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+
+
+.prog-lang {
+  /* display: inline-block; */
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 7px;
+  margin-bottom: 30px;
+}
+
+.prog-lang a{
+  text-decoration: none;
+  color: black;
+}
+
+.description {
+  padding: 10px 0 0 10px;
+}
+
+

@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+
+{% block title %} {{ super() }} {% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+{% endblock %}
+
+{% block content %}
+    {{ super() }}
+
+<div class="info-block container">
+    <h2>Информация о разработчике</h2>
+    <div class="dev-block">
+        <div class="auth-img">
+            <img src="../static/img/auth-img.jpg" width="400" height="300" alt="фотография">
+        </div>
+        <div class="auth-info">
+            <p>Автор: Лукьянов Павел Юрьевич</p>
+            <p>Группа: Python216</p>
+            <p>Веб-разработка на Python</p>
+            <h3>Изучаемые языки:</h3>
+            <ul>
+                <li>SQL</li>
+                <li>Python</li>
+                <li>HTML, CSS</li>
+
+            </ul>
+        </div>
+        <div class="other-links">
+            <h3>Связь с разработчиком: </h3>
+            <a href="https://github.com/pavellukyanov08?tab=repositories"><p>GitHub-профиль разработчика</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
