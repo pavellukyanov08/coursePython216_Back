@@ -23,16 +23,42 @@ class DataBase:
     def get_photos(self):
         return self._get_objects('photos')
 
+    def get_posts(self):
+        return self._get_objects('posts')
+
+    def get_post(self, post_id):
+        try:
+            self.__cur.execute(f'SELECT title, text, description FROM posts WHERE url == "{post_id}"')
+            res = self.__cur.fetchone()
+            if res:
+                return res
+        except sq.Error as e:
+            print('Ошибка получения данных о посте', e)
+        return None, None
+
+    def add_post(self, url, title, text, description):
+        try:
+            self.__cur.execute(f'SELECT count() as "count" FROM posts WHERE url == "{url}"')
+            res = self.__cur.fetchone()
+            if res['count'] > 0:
+                print('Такой пост уже существует!')
+                return False
+
+            self.__cur.execute('INSERT INTO posts VALUES (NULL, ?, ?, ?, ?)',
+                               (url, title, text, description))
+            self.__db.commit()
+        except sq.Error as e:
+            print('Ошибка добавления статью в БД', e)
+            return False
+        return True
+
     def add_photo(self):
         try:
-            folder_path = 'static/img'
-            for image in os.listdir(folder_path):
-                if image.lower().startswith('photo') and image.endswith(('.png', '.jpg', '.jpeg')):
-                    with open(os.path.join(folder_path, image), 'rb') as img_f:
-                        img_data = img_f.read()
-                        self.__cur.execute(f'''INSERT INTO photos VALUES (null, ?)''', (sq.Binary(img_data),))
-                        self.__db.commit()
-
+            thumbnail_folder_path = 'static/img/thumbnail'
+            for thumbnail in os.listdir(thumbnail_folder_path):
+                if thumbnail.lower().endswith(('.png', '.jpg', '.jpeg')):
+                    self.__cur.execute(f'INSERT INTO photos VALUES (null, ?)', (thumbnail,))
+                    self.__db.commit()
             return True
         except IOError as e:
             print('Ошибка добавления в базу', e)

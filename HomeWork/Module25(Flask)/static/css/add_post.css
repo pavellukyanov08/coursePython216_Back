@@ -31,45 +31,34 @@ body {
   color: black;
 }
 
-section {
-  max-width: 1220px;
-  min-width: 320px;
-  margin: 0 auto;
-}
-
 h2 {
   text-align: center;
   padding: 50px 50px;
 }
 
-.add_post {
-  display: inline-block;
-  color: black;
-  text-decoration: none;
-  font-size: 17px;
-  margin-bottom: 20px;
-  border: 1px solid black;
-  border-radius: 5px;
-  padding: 5px;
+form {
+  padding-left: 30px;
 }
 
-
-
-.prog-lang {
-  /* display: inline-block; */
-  border: 1px solid black;
-  border-radius: 5px;
-  padding: 7px;
-  margin-bottom: 30px;
+.article_url, 
+.article_name, 
+.article_preview, 
+.article_preview_field,
+.article_text,
+.article_text_field {
+  padding-bottom: 10px;
 }
 
-.prog-lang a{
-  text-decoration: none;
-  color: black;
+.article_url, 
+.article_name, 
+.article_preview, 
+.article_text {
+  /* width: 300px; */
 }
 
-.description {
-  padding: 10px 0 0 10px;
+button {
+  width: 150px;
+  height: 40px;
 }
 
 

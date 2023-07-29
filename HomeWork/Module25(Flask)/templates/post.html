@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/post.css') }}">
+{% endblock %}
+
+{% block title %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+
+<h2>Пост про {{ title }}</h2>
+
+<div class="description-post">
+    <p>{{ description }}</p>
+</div>
+
+
+{% endblock %}

@@ -1,10 +1,22 @@
 {% extends 'main.html' %}
 
-{% block title %} {{ super() }} {% endblock %}
-
 {% block content %}
+{{ super() }}
 
-<h1>{{ super() }}</h1>
+<section class="posts">
+    <h2>Посты про языки программирования</h2>
+
+    <a class="add_post" href="/add_post">Добавить пост</a>
+
+    {% for post in posts %}
+    <div class="prog-lang">
+        <h3 class="title">
+            <a href="/post/{{ post.url }}">{{ post.title }}</a>
+        </h3>
+        <p class="description">{{ post.text }}</p>
+    </div>
+    {% endfor %}
+</section>
 
 {% endblock %}
 
