@@ -49,13 +49,6 @@ form {
   padding-bottom: 10px;
 }
 
-.article_url, 
-.article_name, 
-.article_preview, 
-.article_text {
-  /* width: 300px; */
-}
-
 button {
   width: 150px;
   height: 40px;
