@@ -8,8 +8,11 @@ urlpatterns = [
 
     #Auth
     path('signup/', views.signupuser, name='signup'),
-    # path('login/', views.loginuser, name='login'),
+    # Logout
+    path('lognout/', views.logoutuser, name='logout'),
+    path('login/', views.loginuser, name='login'),
 
     #Todos
-    path('current/', views.current_todos, name='current'),
+    path('', views.home, name='home'),
+    path('currenttodos/', views.currenttodos, name='current'),
 ]
